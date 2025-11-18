@@ -1,0 +1,660 @@
+function CactusCluster.new 0
+push constant 10
+call Memory.alloc 1
+pop pointer 0
+push pointer 0
+call CactusCluster.reset 1
+pop temp 0
+push static 0
+if-goto $_IF_FALSE0
+push constant 30
+pop static 0
+goto $_IF_END0
+label $_IF_FALSE0
+label $_IF_END0
+push pointer 0
+return
+function CactusCluster.decrement_rightmost 0
+push static 0
+push constant 1
+sub
+pop static 0
+push static 0
+push constant 30
+lt
+not
+if-goto $_IF_FALSE1
+push constant 29
+pop static 0
+goto $_IF_END1
+label $_IF_FALSE1
+label $_IF_END1
+push constant 0
+return
+function CactusCluster.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function CactusCluster.x 0
+push argument 0
+pop pointer 0
+push this 8
+return
+function CactusCluster.update 0
+push argument 0
+pop pointer 0
+push this 6
+push constant 30
+gt
+not
+if-goto $_IF_FALSE2
+push this 2
+push constant 1
+sub
+pop this 2
+push this 6
+push constant 1
+sub
+pop this 6
+push this 8
+push constant 1
+sub
+pop this 8
+push constant 0
+return
+goto $_IF_END2
+label $_IF_FALSE2
+label $_IF_END2
+push this 4
+push constant 1
+eq
+not
+if-goto $_IF_FALSE3
+push this 5
+push constant 1
+eq
+not
+if-goto $_IF_FALSE4
+push this 2
+call Graphics.drawCactus1Pos1 1
+pop temp 0
+goto $_IF_END4
+label $_IF_FALSE4
+push this 5
+push constant 2
+eq
+not
+if-goto $_IF_FALSE5
+push this 2
+call Graphics.drawCactus1Pos2 1
+pop temp 0
+goto $_IF_END5
+label $_IF_FALSE5
+push this 5
+push constant 3
+eq
+not
+if-goto $_IF_FALSE6
+push this 2
+call Graphics.drawCactus1Pos3 1
+pop temp 0
+goto $_IF_END6
+label $_IF_FALSE6
+push this 5
+push constant 4
+eq
+not
+if-goto $_IF_FALSE7
+push this 2
+call Graphics.drawCactus1Pos4 1
+pop temp 0
+goto $_IF_END7
+label $_IF_FALSE7
+push this 5
+push constant 5
+eq
+not
+if-goto $_IF_FALSE8
+push this 2
+call Graphics.drawCactus1Pos5 1
+pop temp 0
+goto $_IF_END8
+label $_IF_FALSE8
+push this 5
+push constant 6
+eq
+not
+if-goto $_IF_FALSE9
+push this 2
+call Graphics.drawCactus1Pos6 1
+pop temp 0
+goto $_IF_END9
+label $_IF_FALSE9
+push this 5
+push constant 7
+eq
+not
+if-goto $_IF_FALSE10
+push this 2
+call Graphics.drawCactus1Pos7 1
+pop temp 0
+goto $_IF_END10
+label $_IF_FALSE10
+push this 5
+push constant 8
+eq
+not
+if-goto $_IF_FALSE11
+push this 2
+call Graphics.drawCactus1Pos8 1
+pop temp 0
+push this 2
+push constant 1
+sub
+pop this 2
+push this 6
+push constant 1
+sub
+pop this 6
+push this 8
+push constant 1
+sub
+pop this 8
+push constant 0
+pop this 5
+goto $_IF_END11
+label $_IF_FALSE11
+label $_IF_END11
+label $_IF_END10
+label $_IF_END9
+label $_IF_END8
+label $_IF_END7
+label $_IF_END6
+label $_IF_END5
+label $_IF_END4
+goto $_IF_END3
+label $_IF_FALSE3
+push this 4
+push constant 2
+eq
+not
+if-goto $_IF_FALSE12
+push this 5
+push constant 1
+eq
+not
+if-goto $_IF_FALSE13
+push this 2
+call Graphics.drawCactus2Pos1 1
+pop temp 0
+goto $_IF_END13
+label $_IF_FALSE13
+push this 5
+push constant 2
+eq
+not
+if-goto $_IF_FALSE14
+push this 2
+call Graphics.drawCactus2Pos2 1
+pop temp 0
+goto $_IF_END14
+label $_IF_FALSE14
+push this 5
+push constant 3
+eq
+not
+if-goto $_IF_FALSE15
+push this 2
+call Graphics.drawCactus2Pos3 1
+pop temp 0
+goto $_IF_END15
+label $_IF_FALSE15
+push this 5
+push constant 4
+eq
+not
+if-goto $_IF_FALSE16
+push this 2
+call Graphics.drawCactus2Pos4 1
+pop temp 0
+goto $_IF_END16
+label $_IF_FALSE16
+push this 5
+push constant 5
+eq
+not
+if-goto $_IF_FALSE17
+push this 2
+call Graphics.drawCactus2Pos5 1
+pop temp 0
+goto $_IF_END17
+label $_IF_FALSE17
+push this 5
+push constant 6
+eq
+not
+if-goto $_IF_FALSE18
+push this 2
+call Graphics.drawCactus2Pos6 1
+pop temp 0
+goto $_IF_END18
+label $_IF_FALSE18
+push this 5
+push constant 7
+eq
+not
+if-goto $_IF_FALSE19
+push this 2
+call Graphics.drawCactus2Pos7 1
+pop temp 0
+goto $_IF_END19
+label $_IF_FALSE19
+push this 5
+push constant 8
+eq
+not
+if-goto $_IF_FALSE20
+push this 2
+call Graphics.drawCactus2Pos8 1
+pop temp 0
+push this 2
+push constant 1
+sub
+pop this 2
+push this 6
+push constant 1
+sub
+pop this 6
+push this 8
+push constant 1
+sub
+pop this 8
+push constant 0
+pop this 5
+goto $_IF_END20
+label $_IF_FALSE20
+label $_IF_END20
+label $_IF_END19
+label $_IF_END18
+label $_IF_END17
+label $_IF_END16
+label $_IF_END15
+label $_IF_END14
+label $_IF_END13
+goto $_IF_END12
+label $_IF_FALSE12
+push this 4
+push constant 2
+neg
+eq
+not
+if-goto $_IF_FALSE21
+push this 5
+push constant 1
+eq
+not
+if-goto $_IF_FALSE22
+push this 2
+call Graphics.drawCactus2EndPos1 1
+pop temp 0
+goto $_IF_END22
+label $_IF_FALSE22
+push this 5
+push constant 2
+eq
+not
+if-goto $_IF_FALSE23
+push this 2
+call Graphics.drawCactus2EndPos2 1
+pop temp 0
+goto $_IF_END23
+label $_IF_FALSE23
+push this 5
+push constant 3
+eq
+not
+if-goto $_IF_FALSE24
+push this 2
+call Graphics.drawCactus2EndPos3 1
+pop temp 0
+goto $_IF_END24
+label $_IF_FALSE24
+push this 5
+push constant 4
+eq
+not
+if-goto $_IF_FALSE25
+push this 2
+call Graphics.drawCactus2EndPos4 1
+pop temp 0
+goto $_IF_END25
+label $_IF_FALSE25
+push this 5
+push constant 5
+eq
+not
+if-goto $_IF_FALSE26
+push this 2
+call Graphics.drawCactus2EndPos5 1
+pop temp 0
+goto $_IF_END26
+label $_IF_FALSE26
+push this 5
+push constant 6
+eq
+not
+if-goto $_IF_FALSE27
+push this 2
+call Graphics.drawCactus2EndPos6 1
+pop temp 0
+goto $_IF_END27
+label $_IF_FALSE27
+push this 5
+push constant 7
+eq
+not
+if-goto $_IF_FALSE28
+push this 2
+call Graphics.drawCactus2EndPos7 1
+pop temp 0
+goto $_IF_END28
+label $_IF_FALSE28
+push this 5
+push constant 8
+eq
+not
+if-goto $_IF_FALSE29
+push this 2
+call Graphics.drawCactus2EndPos8 1
+pop temp 0
+goto $_IF_END29
+label $_IF_FALSE29
+push this 5
+push constant 9
+eq
+not
+if-goto $_IF_FALSE30
+push this 2
+call Graphics.drawCactus2EndPos9 1
+pop temp 0
+goto $_IF_END30
+label $_IF_FALSE30
+push this 5
+push constant 10
+eq
+not
+if-goto $_IF_FALSE31
+push this 2
+call Graphics.drawCactus2EndPos10 1
+pop temp 0
+goto $_IF_END31
+label $_IF_FALSE31
+push this 5
+push constant 11
+eq
+not
+if-goto $_IF_FALSE32
+push this 2
+call Graphics.drawCactus2EndPos11 1
+pop temp 0
+goto $_IF_END32
+label $_IF_FALSE32
+push this 5
+push constant 12
+eq
+not
+if-goto $_IF_FALSE33
+push this 2
+call Graphics.drawCactus2EndPos12 1
+pop temp 0
+goto $_IF_END33
+label $_IF_FALSE33
+push this 5
+push constant 13
+eq
+not
+if-goto $_IF_FALSE34
+push this 2
+call Graphics.drawCactus2EndPos13 1
+pop temp 0
+push constant 0
+pop this 5
+push pointer 0
+call CactusCluster.reset 1
+pop temp 0
+goto $_IF_END34
+label $_IF_FALSE34
+label $_IF_END34
+label $_IF_END33
+label $_IF_END32
+label $_IF_END31
+label $_IF_END30
+label $_IF_END29
+label $_IF_END28
+label $_IF_END27
+label $_IF_END26
+label $_IF_END25
+label $_IF_END24
+label $_IF_END23
+label $_IF_END22
+goto $_IF_END21
+label $_IF_FALSE21
+push this 4
+push constant 1
+neg
+eq
+not
+if-goto $_IF_FALSE35
+push this 5
+push constant 1
+eq
+not
+if-goto $_IF_FALSE36
+push this 2
+call Graphics.Cactus1End1 1
+pop temp 0
+goto $_IF_END36
+label $_IF_FALSE36
+push this 5
+push constant 2
+eq
+not
+if-goto $_IF_FALSE37
+push this 2
+call Graphics.Cactus1End2 1
+pop temp 0
+goto $_IF_END37
+label $_IF_FALSE37
+push this 5
+push constant 3
+eq
+not
+if-goto $_IF_FALSE38
+push this 2
+call Graphics.Cactus1End3 1
+pop temp 0
+goto $_IF_END38
+label $_IF_FALSE38
+push this 5
+push constant 4
+eq
+not
+if-goto $_IF_FALSE39
+push this 2
+call Graphics.Cactus1End4 1
+pop temp 0
+goto $_IF_END39
+label $_IF_FALSE39
+push this 5
+push constant 5
+eq
+not
+if-goto $_IF_FALSE40
+push this 2
+call Graphics.Cactus1End5 1
+pop temp 0
+goto $_IF_END40
+label $_IF_FALSE40
+push this 5
+push constant 6
+eq
+not
+if-goto $_IF_FALSE41
+push this 2
+call Graphics.Cactus1End6 1
+pop temp 0
+push constant 0
+pop this 5
+push pointer 0
+call CactusCluster.reset 1
+pop temp 0
+goto $_IF_END41
+label $_IF_FALSE41
+label $_IF_END41
+label $_IF_END40
+label $_IF_END39
+label $_IF_END38
+label $_IF_END37
+label $_IF_END36
+goto $_IF_END35
+label $_IF_FALSE35
+label $_IF_END35
+label $_IF_END21
+label $_IF_END12
+label $_IF_END3
+push this 2
+push this 3
+eq
+push this 4
+and
+push constant 0
+gt
+not
+if-goto $_IF_FALSE42
+push constant 0
+pop this 5
+push constant 0
+pop this 8
+push this 4
+neg
+pop this 4
+goto $_IF_END42
+label $_IF_FALSE42
+label $_IF_END42
+push this 5
+push constant 1
+add
+pop this 5
+push constant 0
+return
+function CactusCluster.reset 0
+push argument 0
+pop pointer 0
+push constant 1
+push constant 2
+call LCGRandom.randRange 2
+pop this 4
+push this 4
+push constant 1
+eq
+not
+if-goto $_IF_FALSE43
+push constant 21
+pop this 0
+push constant 1
+pop this 1
+goto $_IF_END43
+label $_IF_FALSE43
+push this 4
+push constant 2
+eq
+not
+if-goto $_IF_FALSE44
+push constant 16
+pop this 0
+push constant 2
+pop this 1
+goto $_IF_END44
+label $_IF_FALSE44
+label $_IF_END44
+label $_IF_END43
+push constant 244
+push this 0
+sub
+pop this 7
+push static 0
+push constant 20
+push constant 400
+call LCGRandom.randRange 2
+add
+pop this 6
+push this 6
+pop static 0
+push constant 244
+pop this 9
+push this 6
+push this 1
+add
+pop this 8
+push constant 7808
+push this 0
+push constant 32
+call Math.multiply 2
+sub
+pop this 3
+push this 3
+push this 6
+add
+pop this 2
+push constant 0
+pop this 5
+push constant 0
+return
+function CactusCluster.collision 0
+push argument 0
+pop pointer 0
+push this 8
+push constant 4
+eq
+not
+if-goto $_IF_FALSE45
+push constant 3
+pop this 8
+goto $_IF_END45
+label $_IF_FALSE45
+label $_IF_END45
+push this 6
+push argument 3
+gt
+push argument 1
+push this 8
+gt
+or
+not
+if-goto $_IF_FALSE46
+push constant 0
+return
+goto $_IF_END46
+label $_IF_FALSE46
+label $_IF_END46
+push this 7
+push argument 4
+gt
+push argument 2
+push this 9
+gt
+or
+not
+if-goto $_IF_FALSE47
+push constant 0
+return
+goto $_IF_END47
+label $_IF_FALSE47
+label $_IF_END47
+push constant 0
+not
+return

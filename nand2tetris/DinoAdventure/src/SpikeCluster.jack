@@ -1,0 +1,173 @@
+class SpikeCluster {
+    // Tracks how far to the right the last spike cluster was placed (in word units)
+    static int rightmost;
+
+    // Basic geometry
+    field int height;          // in pixels
+    field int width;           // in words (1 or 2)
+    field int location;        // top-left screen word index for sprite (for Graphics)
+    field int sprite;          // 1 = small spike, 2 = big spike
+
+    // Collision box (word-based x, pixel-based y)
+    field int tlx;             // top-left x (in words)
+    field int tly;             // top-left y (in pixels)
+    field int brx;             // bottom-right x (in words)
+    field int bry;             // bottom-right y (in pixels)
+
+    /** constructor
+     *  Initializes one spike cluster and ensures rightmost has a sane initial value.
+     */
+    constructor SpikeCluster new() {
+        do reset();
+        // If rightmost is still uninitialized (0), put it just off the right edge
+        if (~rightmost) {
+            let rightmost = 30;
+        }
+        return this;
+    }
+
+    /** decrementRightmost
+     *  Called once per frame from the main game to gradually bring the
+     *  spawn point closer as off-screen spikes move left.
+     */
+    function void decrementRightmost() {
+        let rightmost = rightmost - 1;
+        if (rightmost < 30) {
+            let rightmost = 29;
+        }
+        return;
+    }
+
+    /** dispose
+     *  Free this object when the game ends.
+     */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** x
+     *  Returns the right edge of the spike in word coordinates.
+     *  (Not currently used elsewhere but kept for compatibility.)
+     */
+    method int x() {
+        return brx;
+    }
+
+    /** update
+     *  Moves the spike cluster one word to the left and redraws it.
+     *  - Off-screen to the right: only move logically (no drawing).
+     *  - On-screen: erase at old location, move, and draw at new location.
+     *  - When completely past the left edge: reset to a new random position.
+     */
+    method void update() {
+        var int oldLocation;
+
+        // If spike has not entered the visible part of the screen yet
+        // (we keep skipping drawing until tlx <= 30)
+        if (tlx > 30) {
+            let location = location - 1;
+            let tlx = tlx - 1;
+            let brx = brx - 1;
+            return;
+        }
+
+        // Erase the sprite at the previous location (if any)
+        let oldLocation = location;
+        if (sprite = 1) {
+            do Graphics.eraseSpike1(oldLocation);
+        }
+        else {
+            if (sprite = 2) {
+                do Graphics.eraseSpike2(oldLocation);
+            }
+        }
+
+        // Move one word to the left (16 pixels)
+        let location = location - 1;
+        let tlx = tlx - 1;
+        let brx = brx - 1;
+
+        // If the spike is completely past the left side, spawn a new one
+        if (brx < 0) {
+            do reset();
+            return;
+        }
+
+        // Draw the sprite at the new location
+        if (sprite = 1) {
+            do Graphics.drawSpike1(location);
+        }
+        else {
+            if (sprite = 2) {
+                do Graphics.drawSpike2(location);
+            }
+        }
+
+        return;
+    }
+
+    /** reset
+     *  Chooses a spike type and spawns it at a random distance to the right
+     *  of the last spike cluster, using the shared static rightmost.
+     */
+    method void reset() {
+        // 1 Choose which spike sprite we will use
+        let sprite = LCGRandom.randRange(1, 2);
+
+        if (sprite = 1) {
+            // Small single spike
+            let height = 21;   // matches drawSpike1 comment in Graphics.jack
+            let width  = 1;    // 1 word wide
+        }
+        else {
+            if (sprite = 2) {
+                // Large double spike
+                let height = 16;  // matches drawSpike2
+                let width  = 2;   // 2 words wide
+            }
+        }
+
+        // 2 Position spike above the ground line (y = 244)
+        //    tly is the top y coordinate of the bounding box
+        let tly = 244 - height;
+
+        // Place new spike some distance to the right of the previous one
+        let tlx = rightmost + LCGRandom.randRange(20, 400);
+        let rightmost = tlx;
+
+        let bry = 244;
+        let brx = tlx + width;
+
+        // 3 Compute the screen memory location for the top-left word
+        //
+        // 7808 is the word index corresponding to y = 244 (ground row).
+        // Each pixel row is 32 words apart, so height * 32 moves the
+        // top of the sprite up by "height" rows.
+        let location = (7808 - (height * 32)) + tlx;
+
+        return;
+    }
+
+    /** collision
+     *  Standard AABB collision between this spike (box 0) and another box (1)
+     *  given as (tl1x, tl1y, br1x, br1y).
+     *
+     *  Coordinates:
+     *  - x in words
+     *  - y in pixels
+     */
+    method boolean collision(int tl1x, int tl1y, int br1x, int br1y) {
+        // If separated on X axis, no collision
+        if ((tlx > br1x) | (tl1x > brx)) {
+            return false;
+        }
+
+        // If separated on Y axis, no collision
+        if ((tly > br1y) | (tl1y > bry)) {
+            return false;
+        }
+
+        return true;
+    }
+}

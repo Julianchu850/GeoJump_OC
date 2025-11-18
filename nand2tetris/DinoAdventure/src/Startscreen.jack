@@ -1,58 +1,88 @@
-/*
-* go returns a 'random' number (the amount of cycles of waiting between loading screen and user pressing a valid key)
-*/
+/** 
+ * Startscreen.jack
+ * Pantalla inicial para el Geometry Game.
+ * 
+ * Startscreen.go:
+ *  - Limpia la pantalla
+ *  - Muestra el titulo y las instrucciones
+ *  - Espera a que el usuario presione una tecla para empezar
+ *  - Devuelve el codigo de la tecla pulsada (para usar como semilla)
+ */
 
 class Startscreen {
-	
-	function int go() {
-		var boolean break;
-		var int key, cycles;
-		var String str;
-		
-		// Add screen prompts
-		let str = "Dino Game:";
-		do Output.moveCursor(6, 10);
-		do Output.printString(str);
-		do str.dispose();
-	
-		let str = "Space or up-arrow to jump";
-		do Output.moveCursor(7, 10);
-		do Output.printString(str);
-		do str.dispose();
-	
-		let str = "down-arrow to crouch or exit from a jump";
-		do Output.moveCursor(8, 10);
-		do Output.printString(str);
-		do str.dispose();
-	
-		let str = "q to quit";
-		do Output.moveCursor(9, 10);
-		do Output.printString(str);
-		do str.dispose();
-		
-	
-		let str = "Press space to begin!";
-		do Output.moveCursor(10, 10);
-		do Output.printString(str);
-		do str.dispose();
-		
-		let str = "Hint: complete all achievements to win";
-		do Output.moveCursor(12, 10);
-		do Output.printString(str);
-		do str.dispose();
-		
-		let cycles = 0;
-		// count cycles until key is pressed
-		while (Keyboard.keyPressed() = 0) {let cycles = cycles + 1;}
-		
-		// Get response
-		while (~break) {
-			let key = Keyboard.keyPressed();
-			if ((key = 32) | (key = 131) | (key = 133)) {
-				let break = true;
-			}
-		}
-		//return 12894;
-		return cycles;
-	}
+
+    /**
+     * Muestra la pantalla de inicio y espera a que el usuario presione una tecla.
+     * @return int  codigo de la tecla pulsada (usado como semilla de LCGRandom)
+     */
+    function int go() {
+        var String line;
+        var int key;
+        var boolean done;
+
+        // Limpiar pantalla
+        do Screen.clearScreen();
+
+        // Titulo principal
+        let line = "GEOMETRY JUMP";
+        do Output.moveCursor(5, 12);
+        do Output.printString(line);
+        do line.dispose();
+
+        // Subtitulo
+        let line = "An adaptation of the Dino Game";
+        do Output.moveCursor(7, 8);
+        do Output.printString(line);
+        do line.dispose();
+
+        // Controles
+        let line = "SPACE / UP  : jump";
+        do Output.moveCursor(10, 8);
+        do Output.printString(line);
+        do line.dispose();
+
+        let line = "DOWN        : flip gravity";
+        do Output.moveCursor(11, 8);
+        do Output.printString(line);
+        do line.dispose();
+
+        let line = "LEFT / RIGHT: change jump power";
+        do Output.moveCursor(12, 8);
+        do Output.printString(line);
+        do line.dispose();
+
+        let line = "DIGITS      : change game speed";
+        do Output.moveCursor(13, 8);
+        do Output.printString(line);
+        do line.dispose();
+
+        let line = "Q           : quit game";
+        do Output.moveCursor(14, 8);
+        do Output.printString(line);
+        do line.dispose();
+
+        // Mensaje para empezar
+        let line = "Press any key to start";
+        do Output.moveCursor(17, 10);
+        do Output.printString(line);
+        do line.dispose();
+
+        // Esperar a que no haya teclas presionadas
+        while (~(Keyboard.keyPressed() = 0)) { }
+
+        // Esperar a que se presione alguna tecla
+        let done = false;
+        while (~done) {
+            let key = Keyboard.keyPressed();
+            if (~(key = 0)) {
+                let done = true;
+            }
+        }
+
+        // Esperar a que se suelte la tecla, para no cargar el juego con la tecla "pegada"
+        while (~(Keyboard.keyPressed() = 0)) { }
+
+        // Devolver el codigo de la tecla como semilla
+        return key;
+    }
 }
