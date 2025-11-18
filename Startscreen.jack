@@ -10,6 +10,7 @@
  */
 
 class Startscreen {
+    static int cubeNum;
 
     /**
      * Muestra la pantalla de inicio y espera a que el usuario presione una tecla.
@@ -18,7 +19,8 @@ class Startscreen {
     function int go() {
         var String line;
         var int key;
-        var boolean done;
+
+        
 
         // Limpiar pantalla
         do Screen.clearScreen();
@@ -67,14 +69,44 @@ class Startscreen {
         do Output.printString(line);
         do line.dispose();
 
+       
+            let key = Startscreen.pressedKey();
+
+        // Devolver el codigo de la tecla como semilla
+        
+            do ChooseCube.drawCubes();
+
+            
+            let key = Startscreen.pressedKey();
+            // Normalize ASCII digit keys '1'..'4' (49..52) to numeric 1..4
+            let cubeNum = key;
+            // Verificar si está en el rango 49-52 (teclas '1' a '4')
+            if ((cubeNum > 48) & (cubeNum < 53)) {
+                let cubeNum = cubeNum - 48; // '1'->1, '2'->2, etc.
+            }else {
+            let cubeNum = 1; // Default si no es 1-4
+        }
+
+            return key;
+          
+    }
+
+    function int getCubeNum(){
+        return cubeNum;
+    }
+
+    function int pressedKey(){
+        var boolean done;
+        var int keyTemp;
+
         // Esperar a que no haya teclas presionadas
         while (~(Keyboard.keyPressed() = 0)) { }
 
         // Esperar a que se presione alguna tecla
         let done = false;
         while (~done) {
-            let key = Keyboard.keyPressed();
-            if (~(key = 0)) {
+            let keyTemp = Keyboard.keyPressed();
+            if (~(keyTemp = 0)) {
                 let done = true;
             }
         }
@@ -82,7 +114,7 @@ class Startscreen {
         // Esperar a que se suelte la tecla, para no cargar el juego con la tecla "pegada"
         while (~(Keyboard.keyPressed() = 0)) { }
 
-        // Devolver el codigo de la tecla como semilla
-        return key;
+        return keyTemp;
+
     }
 }

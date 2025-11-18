@@ -1,0 +1,50 @@
+/** Choosecube.jack 
+    * Pantalla de seleccion de cubo para el Geometry Game.
+    * 
+    * ChooseCube.go:
+    *  - Muestra las opciones de cubo disponibles
+    *  - Permite al usuario seleccionar un cubo (1-4)
+    *  - Devuelve el numero del cubo seleccionado
+    */
+
+class ChooseCube {
+
+    function void drawCubes(){
+        var String line;
+
+        do Screen.clearScreen();
+        do Graphics.drawLargeAsciiCube1(4, 5);
+        let line = "1";
+        do Output.moveCursor(15, 10);
+        do Output.printString(line);
+        do line.dispose();
+
+
+        do Graphics.drawLargeAsciiCube2(4, 20);
+        let line = "2";
+        do Output.moveCursor(15, 25);
+        do Output.printString(line);
+        do line.dispose();
+
+        do Graphics.drawLargeAsciiCube3(4, 35);
+        let line = "3";
+        do Output.moveCursor(15, 40);
+        do Output.printString(line);
+        do line.dispose();
+
+        do Graphics.drawLargeAsciiCube4(4, 50);
+
+        let line = "4";
+        do Output.moveCursor(15, 55);
+        do Output.printString(line);
+        do line.dispose();
+        
+        let line = "Choose cube";
+        do Output.moveCursor(20, 25);
+        do Output.printString(line);
+        do line.dispose();
+        
+        return;
+    }
+}
+    

@@ -92,8 +92,6 @@ pop temp 0
 push this 19
 call Output.printInt 1
 pop temp 0
-call Achievements.writeAchievementsLeft 0
-pop temp 0
 push constant 1
 push constant 0
 call Output.moveCursor 2
@@ -601,7 +599,7 @@ push this 18
 call Output.printInt 1
 pop temp 0
 push this 18
-push constant 100
+push constant 150
 eq
 push this 18
 push constant 250

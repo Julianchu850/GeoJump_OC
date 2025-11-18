@@ -1,4 +1,4 @@
-function Cube.new 0
+function Cube.new 1
 push constant 11
 call Memory.alloc 1
 pop pointer 0
@@ -41,12 +41,11 @@ not
 pop this 9
 push constant 0
 pop this 10
-push constant 1
-push constant 4
-call LCGRandom.randRange 2
+call Startscreen.getCubeNum 0
 pop this 5
 push pointer 0
-call Cube.drawCube 1
+push this 5
+call Cube.drawCube 2
 pop temp 0
 push pointer 0
 return
@@ -61,7 +60,7 @@ return
 function Cube.drawCube 0
 push argument 0
 pop pointer 0
-push this 5
+push argument 1
 push constant 1
 eq
 if-goto IF_TRUE0
@@ -72,7 +71,7 @@ call Graphics.drawCube1 1
 pop temp 0
 goto IF_END0
 label IF_FALSE0
-push this 5
+push argument 1
 push constant 2
 eq
 if-goto IF_TRUE1
@@ -83,7 +82,7 @@ call Graphics.drawCube2 1
 pop temp 0
 goto IF_END1
 label IF_FALSE1
-push this 5
+push argument 1
 push constant 3
 eq
 if-goto IF_TRUE2
@@ -207,7 +206,8 @@ push local 0
 call Cube.eraseCube 2
 pop temp 0
 push pointer 0
-call Cube.drawCube 1
+push this 5
+call Cube.drawCube 2
 pop temp 0
 label IF_FALSE5
 push constant 1

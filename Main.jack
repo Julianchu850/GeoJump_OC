@@ -18,7 +18,7 @@ class Main {
         while (~(gameState = 0)) {
             if (Endscreen.crash()) { // user wants to play again
                 do game.dispose();
-                let game = GeometryGame.new(gameState); // pass previous score if you want
+                let game = GeometryGame.new(gameState); 
                 let gameState = game.run();
             }
             else {
