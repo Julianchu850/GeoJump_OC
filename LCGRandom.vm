@@ -4,13 +4,12 @@ pop static 0
 push static 0
 push constant 0
 eq
-not
-if-goto $_IF_FALSE0
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
 push constant 1
 pop static 0
-goto $_IF_END0
-label $_IF_FALSE0
-label $_IF_END0
+label IF_FALSE0
 push constant 219
 pop static 1
 push constant 32749
@@ -41,17 +40,18 @@ pop local 0
 push local 0
 push constant 0
 lt
-not
-if-goto $_IF_FALSE1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
 push local 0
 push static 2
 add
 pop static 0
-goto $_IF_END1
-label $_IF_FALSE1
+goto IF_END0
+label IF_FALSE0
 push local 0
 pop static 0
-label $_IF_END1
+label IF_END0
 push static 0
 return
 function LCGRandom.randRange 1

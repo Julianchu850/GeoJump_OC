@@ -508,61 +508,63 @@ push static 0
 push constant 53
 lt
 and
-not
-if-goto $_IF_FALSE0
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
 push static 0
 push constant 48
 sub
 pop static 0
-goto $_IF_END0
-label $_IF_FALSE0
+goto IF_END0
+label IF_FALSE0
 push constant 1
 pop static 0
-label $_IF_END0
+label IF_END0
 push local 1
 return
 function Startscreen.getCubeNum 0
 push static 0
 return
 function Startscreen.pressedKey 2
-label $_WHILE_EXP1
+label WHILE_EXP0
 call Keyboard.keyPressed 0
 push constant 0
 eq
 not
 not
-if-goto $_WHILE_END1
-goto $_WHILE_EXP1
-label $_WHILE_END1
+if-goto WHILE_END0
+goto WHILE_EXP0
+label WHILE_END0
 push constant 0
 pop local 0
-label $_WHILE_EXP2
+label WHILE_EXP1
 push local 0
 not
 not
-if-goto $_WHILE_END2
+if-goto WHILE_END1
 call Keyboard.keyPressed 0
 pop local 1
 push local 1
 push constant 0
 eq
-if-goto $_IF_FALSE3
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
 push constant 0
 not
 pop local 0
-goto $_IF_END3
-label $_IF_FALSE3
-label $_IF_END3
-goto $_WHILE_EXP2
-label $_WHILE_END2
-label $_WHILE_EXP4
+label IF_FALSE0
+goto WHILE_EXP1
+label WHILE_END1
+label WHILE_EXP2
 call Keyboard.keyPressed 0
 push constant 0
 eq
 not
 not
-if-goto $_WHILE_END4
-goto $_WHILE_EXP4
-label $_WHILE_END4
+if-goto WHILE_END2
+goto WHILE_EXP2
+label WHILE_END2
 push local 1
 return
