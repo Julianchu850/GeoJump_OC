@@ -32,7 +32,7 @@ call SpikeCluster.new 0
 pop this 13
 call SpikeCluster.new 0
 pop this 14
-push constant 15
+push constant 25
 pop this 1
 push this 1
 push constant 4
@@ -472,7 +472,9 @@ if-goto IF_TRUE5
 goto IF_FALSE5
 label IF_TRUE5
 push this 7
-call Spaceship.reset 1
+push constant 0
+not
+call Spaceship.reset 2
 pop temp 0
 label IF_FALSE5
 push this 8
@@ -485,7 +487,9 @@ if-goto IF_TRUE6
 goto IF_FALSE6
 label IF_TRUE6
 push this 8
-call Spaceship.reset 1
+push constant 0
+not
+call Spaceship.reset 2
 pop temp 0
 label IF_FALSE6
 push this 9
@@ -498,7 +502,9 @@ if-goto IF_TRUE7
 goto IF_FALSE7
 label IF_TRUE7
 push this 9
-call Spaceship.reset 1
+push constant 0
+not
+call Spaceship.reset 2
 pop temp 0
 label IF_FALSE7
 goto IF_END3
@@ -595,18 +601,18 @@ push this 18
 call Output.printInt 1
 pop temp 0
 push this 18
+push constant 100
+eq
+push this 18
+push constant 250
+eq
+or
+push this 18
 push constant 500
 eq
+or
 push this 18
 push constant 1000
-eq
-or
-push this 18
-push constant 1500
-eq
-or
-push this 18
-push constant 2000
 eq
 or
 if-goto IF_TRUE12

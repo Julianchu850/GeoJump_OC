@@ -1,7 +1,9 @@
 class SpikeCluster {
     // Tracks how far to the right the last spike cluster was placed (in word units)
     static int rightmost;
-    static int moveCounter;  // ← AGREGAR: Contador para movimiento lento
+    static int minGap;  // ← AGREGAR: Contador para movimiento lento
+    field boolean hasCollided;  // ✅ Nuevo campo
+
 
     // Basic geometry
     field int height;          // in pixels
@@ -20,87 +22,69 @@ class SpikeCluster {
         do reset();
         // If rightmost is still uninitialized (0), put it just off the right edge
         if (~rightmost) {
-            let rightmost = 30;
+            let rightmost = 25;
         }
-        // ← AGREGAR: Inicializar contador
-        let moveCounter = 0;
+        if (~minGap) {
+            let minGap = 20;  // ✅ Mínimo 12 palabras entre spikes
+        }
+            let hasCollided = false;  // ✅ Inicializar
+
         return this;
     }
 
-    /** decrementRightmost */
-    function void decrementRightmost() {
-        // ← AGREGAR: Solo decrementa cada 2 frames (más lento)
-        let moveCounter = moveCounter + 1;
-        if (moveCounter > 3) {  // Cambiar a 2, 3, 4... para más lento
-            let moveCounter = 0;
-            let rightmost = rightmost - 1;
-            if (rightmost < 30) {
-                let rightmost = 29;
-            }
-        }
+   function void decrementRightmost() {
+    // Eliminar el contador, mover siempre
+    let rightmost = rightmost - 1;
+    if (rightmost < 25) {
+        let rightmost = 24;
+    }
+    return;
+}
+
+method void update() {
+    var int oldLocation;
+
+    if (tlx > 30) {
+        let location = location - 1;
+        let tlx = tlx - 1;
+        let brx = brx - 1;
         return;
     }
 
-    /** dispose */
+    let oldLocation = location;
+    if (sprite = 1) {
+        do Graphics.eraseSpike1(oldLocation);
+    }
+    else {
+        if (sprite = 2) {
+            do Graphics.eraseSpike2(oldLocation);
+        }
+    }
+
+    // Mover siempre, sin contador
+    let location = location - 1;
+    let tlx = tlx - 1;
+    let brx = brx - 1;
+
+    if (brx < 0) {
+        do reset();
+        return;
+    }
+
+    if (sprite = 1) {
+        do Graphics.drawSpike1(location);
+    }
+    else {
+        if (sprite = 2) {
+            do Graphics.drawSpike2(location);
+        }
+    }
+
+    return;
+}
+
     method void dispose() {
         do Memory.deAlloc(this);
-        return;
-    }
-
-    /** x */
-    method int x() {
-        return brx;
-    }
-
-    /** update - MODIFICADO para movimiento más lento */
-    method void update() {
-        var int oldLocation;
-
-        // If spike has not entered the visible part of the screen yet
-        if (tlx > 30) {
-            // ✅ CAMBIO: Solo mueve cada 2 frames
-            if ((moveCounter / 2) * 2 = moveCounter) {  // Si moveCounter es par
-                let location = location - 1;
-                let tlx = tlx - 1;
-                let brx = brx - 1;
-            }
-            return;
-        }
-
-        // Erase the sprite at the previous location (if any)
-        let oldLocation = location;
-        if (sprite = 1) {
-            do Graphics.eraseSpike1(oldLocation);
-        }
-        else {
-            if (sprite = 2) {
-                do Graphics.eraseSpike2(oldLocation);
-            }
-        }
-
-        // ✅ CAMBIO: Move one word to the left SOLO cada 2 frames
-        if ((moveCounter / 2) * 2 = moveCounter) {  // Si moveCounter es par
-            let location = location - 1;
-            let tlx = tlx - 1;
-            let brx = brx - 1;
-        }
-
-        // If the spike is completely past the left side, spawn a new one
-        if (brx < 0) {
-            do reset();
-            return;
-        }
-
-        // Draw the sprite at the new location
-        if (sprite = 1) {
-            do Graphics.drawSpike1(location);
-        }
-        else {
-            if (sprite = 2) {
-                do Graphics.drawSpike2(location);
-            }
-        }
-
         return;
     }
 
@@ -121,23 +105,29 @@ class SpikeCluster {
         }
 
         let tly = 244 - height;
-        let tlx = rightmost + LCGRandom.randRange(20, 150);
+        let tlx = rightmost + LCGRandom.randRange(20, 150) + minGap;
         let rightmost = tlx;
         let bry = 244;
         let brx = tlx + width;
         let location = (7808 - (height * 32)) + tlx;
+        let hasCollided = false;  // ✅ Reset cuando reaparece
 
         return;
     }
 
     /** collision */
     method boolean collision(int tl1x, int tl1y, int br1x, int br1y) {
+        if (hasCollided) {  // ignorar si ya colisiono
+        return false;
+        }
+
         if ((tlx > br1x) | (tl1x > brx)) {
             return false;
         }
         if ((tly > br1y) | (tl1y > bry)) {
             return false;
         }
+        let hasCollided = true;  // Marcar como colisionado
         return true;
     }
 }

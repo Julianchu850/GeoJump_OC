@@ -5,12 +5,25 @@ pop pointer 0
 push constant 0
 pop this 0
 push pointer 0
-call Spaceship.reset 1
+push constant 0
+call Spaceship.reset 2
 pop temp 0
+push static 0
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
 push constant 30
 pop static 0
-push constant 0
+label IF_FALSE0
+push static 1
+not
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push constant 20
 pop static 1
+label IF_FALSE1
 push pointer 0
 return
 function Spaceship.dispose 0
@@ -22,18 +35,6 @@ pop temp 0
 push constant 0
 return
 function Spaceship.decrementRightmost 0
-push static 1
-push constant 1
-add
-pop static 1
-push static 1
-push constant 3
-gt
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
-push constant 0
-pop static 1
 push static 0
 push constant 1
 sub
@@ -41,12 +42,11 @@ pop static 0
 push static 0
 push constant 28
 lt
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
 push constant 28
 pop static 0
-label IF_FALSE1
 label IF_FALSE0
 push constant 0
 return
@@ -59,16 +59,6 @@ gt
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push static 1
-push constant 2
-call Math.divide 2
-push constant 2
-call Math.multiply 2
-push static 1
-eq
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
 push this 0
 push constant 1
 sub
@@ -81,7 +71,6 @@ push this 3
 push constant 1
 sub
 pop this 3
-label IF_FALSE1
 push constant 0
 return
 label IF_FALSE0
@@ -90,16 +79,6 @@ pop local 0
 push local 0
 call Graphics.eraseSpaceship 1
 pop temp 0
-push static 1
-push constant 2
-call Math.divide 2
-push constant 2
-call Math.multiply 2
-push static 1
-eq
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
 push this 0
 push constant 1
 sub
@@ -112,19 +91,20 @@ push this 3
 push constant 1
 sub
 pop this 3
-label IF_FALSE2
 push this 3
 push constant 0
 lt
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
 push pointer 0
-call Spaceship.reset 1
+push constant 0
+not
+call Spaceship.reset 2
 pop temp 0
 push constant 0
 return
-label IF_FALSE3
+label IF_FALSE1
 push this 0
 call Graphics.drawSpaceship 1
 pop temp 0
@@ -137,9 +117,14 @@ push this 0
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
+push argument 1
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
 push this 0
 call Graphics.eraseSpaceship 1
 pop temp 0
+label IF_FALSE1
 label IF_FALSE0
 push constant 0
 push constant 9
@@ -148,37 +133,46 @@ pop local 0
 push local 0
 push constant 7
 lt
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
-push constant 210
-pop this 2
-goto IF_END1
-label IF_FALSE1
-push local 0
-push constant 9
-eq
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
-push constant 235
+push constant 210
 pop this 2
 goto IF_END2
 label IF_FALSE2
+push local 0
+push constant 9
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push constant 235
+pop this 2
+goto IF_END3
+label IF_FALSE3
 push constant 215
 pop this 2
+label IF_END3
 label IF_END2
-label IF_END1
 push constant 13
 pop local 1
 push static 0
 push constant 20
-push constant 1000
+push constant 200
 call LCGRandom.randRange 2
+add
+push static 1
 add
 pop this 1
 push this 1
+push static 0
+gt
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push this 1
 pop static 0
+label IF_FALSE4
 push this 1
 push constant 1
 add
@@ -226,7 +220,7 @@ return
 label IF_FALSE1
 push argument 4
 push this 2
-push constant 8
+push constant 10
 add
 gt
 if-goto IF_TRUE2
