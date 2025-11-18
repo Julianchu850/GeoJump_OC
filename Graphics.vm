@@ -1433,12 +1433,12 @@ add
 pop local 1
 push constant 0
 pop local 0
-label WHILE_EXP0
+label $_WHILE_EXP0
 push local 0
 push constant 32
 lt
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END0
 push local 1
 push local 0
 add
@@ -1450,19 +1450,19 @@ push local 0
 push constant 1
 add
 pop local 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP0
+label $_WHILE_END0
 push constant 0
 return
 function Graphics.screenBlack 1
 push constant 16384
 pop local 0
-label WHILE_EXP0
+label $_WHILE_EXP1
 push local 0
 push constant 24576
 lt
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END1
 push local 0
 push constant 1
 neg
@@ -1472,19 +1472,19 @@ push local 0
 push constant 1
 add
 pop local 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP1
+label $_WHILE_END1
 push constant 0
 return
 function Graphics.screenWhite 1
 push constant 16384
 pop local 0
-label WHILE_EXP0
+label $_WHILE_EXP2
 push local 0
 push constant 24576
 lt
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END2
 push local 0
 push constant 0
 call Memory.poke 2
@@ -1493,8 +1493,8 @@ push local 0
 push constant 1
 add
 pop local 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP2
+label $_WHILE_END2
 push constant 0
 return
 function Graphics.writeYouWin 1
@@ -1523,12 +1523,12 @@ return
 function Graphics.drawLargeAsciiCube1 2
 push constant 0
 pop local 0
-label WHILE_EXP0
+label $_WHILE_EXP3
 push local 0
 push constant 10
 lt
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END3
 push argument 0
 push local 0
 add
@@ -1538,9 +1538,8 @@ pop temp 0
 push local 0
 push constant 0
 eq
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE4
 push constant 10
 call String.new 1
 push constant 35
@@ -1564,14 +1563,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END0
-label IF_FALSE0
+goto $_IF_END4
+label $_IF_FALSE4
 push local 0
 push constant 1
 eq
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE5
 push constant 10
 call String.new 1
 push constant 35
@@ -1595,14 +1593,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END1
-label IF_FALSE1
+goto $_IF_END5
+label $_IF_FALSE5
 push local 0
 push constant 2
 eq
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+not
+if-goto $_IF_FALSE6
 push constant 11
 call String.new 1
 push constant 35
@@ -1628,14 +1625,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END2
-label IF_FALSE2
+goto $_IF_END6
+label $_IF_FALSE6
 push local 0
 push constant 3
 eq
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
+not
+if-goto $_IF_FALSE7
 push constant 11
 call String.new 1
 push constant 35
@@ -1661,14 +1657,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END3
-label IF_FALSE3
+goto $_IF_END7
+label $_IF_FALSE7
 push local 0
 push constant 4
 eq
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
+not
+if-goto $_IF_FALSE8
 push constant 11
 call String.new 1
 push constant 35
@@ -1694,14 +1689,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END4
-label IF_FALSE4
+goto $_IF_END8
+label $_IF_FALSE8
 push local 0
 push constant 5
 eq
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
+not
+if-goto $_IF_FALSE9
 push constant 11
 call String.new 1
 push constant 35
@@ -1727,14 +1721,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END5
-label IF_FALSE5
+goto $_IF_END9
+label $_IF_FALSE9
 push local 0
 push constant 6
 eq
-if-goto IF_TRUE6
-goto IF_FALSE6
-label IF_TRUE6
+not
+if-goto $_IF_FALSE10
 push constant 11
 call String.new 1
 push constant 35
@@ -1760,14 +1753,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END6
-label IF_FALSE6
+goto $_IF_END10
+label $_IF_FALSE10
 push local 0
 push constant 7
 eq
-if-goto IF_TRUE7
-goto IF_FALSE7
-label IF_TRUE7
+not
+if-goto $_IF_FALSE11
 push constant 11
 call String.new 1
 push constant 35
@@ -1793,14 +1785,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END7
-label IF_FALSE7
+goto $_IF_END11
+label $_IF_FALSE11
 push local 0
 push constant 8
 eq
-if-goto IF_TRUE8
-goto IF_FALSE8
-label IF_TRUE8
+not
+if-goto $_IF_FALSE12
 push constant 11
 call String.new 1
 push constant 35
@@ -1826,8 +1817,8 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END8
-label IF_FALSE8
+goto $_IF_END12
+label $_IF_FALSE12
 push constant 10
 call String.new 1
 push constant 35
@@ -1851,15 +1842,15 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-label IF_END8
-label IF_END7
-label IF_END6
-label IF_END5
-label IF_END4
-label IF_END3
-label IF_END2
-label IF_END1
-label IF_END0
+label $_IF_END12
+label $_IF_END11
+label $_IF_END10
+label $_IF_END9
+label $_IF_END8
+label $_IF_END7
+label $_IF_END6
+label $_IF_END5
+label $_IF_END4
 push local 1
 call Output.printString 1
 pop temp 0
@@ -1870,19 +1861,19 @@ push local 0
 push constant 1
 add
 pop local 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP3
+label $_WHILE_END3
 push constant 0
 return
 function Graphics.drawLargeAsciiCube2 2
 push constant 0
 pop local 0
-label WHILE_EXP0
+label $_WHILE_EXP13
 push local 0
 push constant 10
 lt
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END13
 push argument 0
 push local 0
 add
@@ -1892,9 +1883,8 @@ pop temp 0
 push local 0
 push constant 0
 eq
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE14
 push constant 10
 call String.new 1
 push constant 35
@@ -1918,14 +1908,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END0
-label IF_FALSE0
+goto $_IF_END14
+label $_IF_FALSE14
 push local 0
 push constant 1
 eq
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE15
 push constant 10
 call String.new 1
 push constant 35
@@ -1949,14 +1938,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END1
-label IF_FALSE1
+goto $_IF_END15
+label $_IF_FALSE15
 push local 0
 push constant 2
 eq
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+not
+if-goto $_IF_FALSE16
 push constant 10
 call String.new 1
 push constant 35
@@ -1980,14 +1968,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END2
-label IF_FALSE2
+goto $_IF_END16
+label $_IF_FALSE16
 push local 0
 push constant 3
 eq
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
+not
+if-goto $_IF_FALSE17
 push constant 10
 call String.new 1
 push constant 35
@@ -2011,14 +1998,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END3
-label IF_FALSE3
+goto $_IF_END17
+label $_IF_FALSE17
 push local 0
 push constant 4
 eq
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
+not
+if-goto $_IF_FALSE18
 push constant 10
 call String.new 1
 push constant 35
@@ -2042,14 +2028,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END4
-label IF_FALSE4
+goto $_IF_END18
+label $_IF_FALSE18
 push local 0
 push constant 5
 eq
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
+not
+if-goto $_IF_FALSE19
 push constant 10
 call String.new 1
 push constant 35
@@ -2073,14 +2058,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END5
-label IF_FALSE5
+goto $_IF_END19
+label $_IF_FALSE19
 push local 0
 push constant 6
 eq
-if-goto IF_TRUE6
-goto IF_FALSE6
-label IF_TRUE6
+not
+if-goto $_IF_FALSE20
 push constant 10
 call String.new 1
 push constant 35
@@ -2104,14 +2088,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END6
-label IF_FALSE6
+goto $_IF_END20
+label $_IF_FALSE20
 push local 0
 push constant 7
 eq
-if-goto IF_TRUE7
-goto IF_FALSE7
-label IF_TRUE7
+not
+if-goto $_IF_FALSE21
 push constant 10
 call String.new 1
 push constant 35
@@ -2135,14 +2118,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END7
-label IF_FALSE7
+goto $_IF_END21
+label $_IF_FALSE21
 push local 0
 push constant 8
 eq
-if-goto IF_TRUE8
-goto IF_FALSE8
-label IF_TRUE8
+not
+if-goto $_IF_FALSE22
 push constant 10
 call String.new 1
 push constant 35
@@ -2166,8 +2148,8 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END8
-label IF_FALSE8
+goto $_IF_END22
+label $_IF_FALSE22
 push constant 10
 call String.new 1
 push constant 35
@@ -2191,15 +2173,15 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-label IF_END8
-label IF_END7
-label IF_END6
-label IF_END5
-label IF_END4
-label IF_END3
-label IF_END2
-label IF_END1
-label IF_END0
+label $_IF_END22
+label $_IF_END21
+label $_IF_END20
+label $_IF_END19
+label $_IF_END18
+label $_IF_END17
+label $_IF_END16
+label $_IF_END15
+label $_IF_END14
 push local 1
 call Output.printString 1
 pop temp 0
@@ -2210,19 +2192,19 @@ push local 0
 push constant 1
 add
 pop local 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP13
+label $_WHILE_END13
 push constant 0
 return
 function Graphics.drawLargeAsciiCube3 2
 push constant 0
 pop local 0
-label WHILE_EXP0
+label $_WHILE_EXP23
 push local 0
 push constant 10
 lt
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END23
 push argument 0
 push local 0
 add
@@ -2232,9 +2214,8 @@ pop temp 0
 push local 0
 push constant 0
 eq
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE24
 push constant 10
 call String.new 1
 push constant 35
@@ -2258,14 +2239,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END0
-label IF_FALSE0
+goto $_IF_END24
+label $_IF_FALSE24
 push local 0
 push constant 1
 eq
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE25
 push constant 10
 call String.new 1
 push constant 35
@@ -2289,14 +2269,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END1
-label IF_FALSE1
+goto $_IF_END25
+label $_IF_FALSE25
 push local 0
 push constant 2
 eq
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+not
+if-goto $_IF_FALSE26
 push constant 10
 call String.new 1
 push constant 35
@@ -2320,14 +2299,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END2
-label IF_FALSE2
+goto $_IF_END26
+label $_IF_FALSE26
 push local 0
 push constant 3
 eq
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
+not
+if-goto $_IF_FALSE27
 push constant 10
 call String.new 1
 push constant 35
@@ -2351,14 +2329,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END3
-label IF_FALSE3
+goto $_IF_END27
+label $_IF_FALSE27
 push local 0
 push constant 4
 eq
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
+not
+if-goto $_IF_FALSE28
 push constant 10
 call String.new 1
 push constant 35
@@ -2382,14 +2359,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END4
-label IF_FALSE4
+goto $_IF_END28
+label $_IF_FALSE28
 push local 0
 push constant 5
 eq
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
+not
+if-goto $_IF_FALSE29
 push constant 10
 call String.new 1
 push constant 35
@@ -2413,14 +2389,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END5
-label IF_FALSE5
+goto $_IF_END29
+label $_IF_FALSE29
 push local 0
 push constant 6
 eq
-if-goto IF_TRUE6
-goto IF_FALSE6
-label IF_TRUE6
+not
+if-goto $_IF_FALSE30
 push constant 10
 call String.new 1
 push constant 35
@@ -2444,14 +2419,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END6
-label IF_FALSE6
+goto $_IF_END30
+label $_IF_FALSE30
 push local 0
 push constant 7
 eq
-if-goto IF_TRUE7
-goto IF_FALSE7
-label IF_TRUE7
+not
+if-goto $_IF_FALSE31
 push constant 10
 call String.new 1
 push constant 35
@@ -2475,14 +2449,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END7
-label IF_FALSE7
+goto $_IF_END31
+label $_IF_FALSE31
 push local 0
 push constant 8
 eq
-if-goto IF_TRUE8
-goto IF_FALSE8
-label IF_TRUE8
+not
+if-goto $_IF_FALSE32
 push constant 10
 call String.new 1
 push constant 35
@@ -2506,8 +2479,8 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END8
-label IF_FALSE8
+goto $_IF_END32
+label $_IF_FALSE32
 push constant 10
 call String.new 1
 push constant 35
@@ -2531,15 +2504,15 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-label IF_END8
-label IF_END7
-label IF_END6
-label IF_END5
-label IF_END4
-label IF_END3
-label IF_END2
-label IF_END1
-label IF_END0
+label $_IF_END32
+label $_IF_END31
+label $_IF_END30
+label $_IF_END29
+label $_IF_END28
+label $_IF_END27
+label $_IF_END26
+label $_IF_END25
+label $_IF_END24
 push local 1
 call Output.printString 1
 pop temp 0
@@ -2550,19 +2523,19 @@ push local 0
 push constant 1
 add
 pop local 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP23
+label $_WHILE_END23
 push constant 0
 return
 function Graphics.drawLargeAsciiCube4 2
 push constant 0
 pop local 0
-label WHILE_EXP0
+label $_WHILE_EXP33
 push local 0
 push constant 10
 lt
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END33
 push argument 0
 push local 0
 add
@@ -2572,9 +2545,8 @@ pop temp 0
 push local 0
 push constant 0
 eq
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE34
 push constant 10
 call String.new 1
 push constant 35
@@ -2598,14 +2570,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END0
-label IF_FALSE0
+goto $_IF_END34
+label $_IF_FALSE34
 push local 0
 push constant 1
 eq
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE35
 push constant 10
 call String.new 1
 push constant 35
@@ -2629,14 +2600,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END1
-label IF_FALSE1
+goto $_IF_END35
+label $_IF_FALSE35
 push local 0
 push constant 2
 eq
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+not
+if-goto $_IF_FALSE36
 push constant 10
 call String.new 1
 push constant 35
@@ -2660,14 +2630,13 @@ call String.appendChar 2
 push constant 46
 call String.appendChar 2
 pop local 1
-goto IF_END2
-label IF_FALSE2
+goto $_IF_END36
+label $_IF_FALSE36
 push local 0
 push constant 3
 eq
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
+not
+if-goto $_IF_FALSE37
 push constant 10
 call String.new 1
 push constant 35
@@ -2691,14 +2660,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END3
-label IF_FALSE3
+goto $_IF_END37
+label $_IF_FALSE37
 push local 0
 push constant 4
 eq
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
+not
+if-goto $_IF_FALSE38
 push constant 10
 call String.new 1
 push constant 35
@@ -2722,14 +2690,13 @@ call String.appendChar 2
 push constant 46
 call String.appendChar 2
 pop local 1
-goto IF_END4
-label IF_FALSE4
+goto $_IF_END38
+label $_IF_FALSE38
 push local 0
 push constant 5
 eq
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
+not
+if-goto $_IF_FALSE39
 push constant 10
 call String.new 1
 push constant 35
@@ -2753,14 +2720,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END5
-label IF_FALSE5
+goto $_IF_END39
+label $_IF_FALSE39
 push local 0
 push constant 6
 eq
-if-goto IF_TRUE6
-goto IF_FALSE6
-label IF_TRUE6
+not
+if-goto $_IF_FALSE40
 push constant 10
 call String.new 1
 push constant 35
@@ -2784,14 +2750,13 @@ call String.appendChar 2
 push constant 46
 call String.appendChar 2
 pop local 1
-goto IF_END6
-label IF_FALSE6
+goto $_IF_END40
+label $_IF_FALSE40
 push local 0
 push constant 7
 eq
-if-goto IF_TRUE7
-goto IF_FALSE7
-label IF_TRUE7
+not
+if-goto $_IF_FALSE41
 push constant 10
 call String.new 1
 push constant 35
@@ -2815,14 +2780,13 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-goto IF_END7
-label IF_FALSE7
+goto $_IF_END41
+label $_IF_FALSE41
 push local 0
 push constant 8
 eq
-if-goto IF_TRUE8
-goto IF_FALSE8
-label IF_TRUE8
+not
+if-goto $_IF_FALSE42
 push constant 10
 call String.new 1
 push constant 35
@@ -2846,8 +2810,8 @@ call String.appendChar 2
 push constant 46
 call String.appendChar 2
 pop local 1
-goto IF_END8
-label IF_FALSE8
+goto $_IF_END42
+label $_IF_FALSE42
 push constant 10
 call String.new 1
 push constant 35
@@ -2871,15 +2835,15 @@ call String.appendChar 2
 push constant 35
 call String.appendChar 2
 pop local 1
-label IF_END8
-label IF_END7
-label IF_END6
-label IF_END5
-label IF_END4
-label IF_END3
-label IF_END2
-label IF_END1
-label IF_END0
+label $_IF_END42
+label $_IF_END41
+label $_IF_END40
+label $_IF_END39
+label $_IF_END38
+label $_IF_END37
+label $_IF_END36
+label $_IF_END35
+label $_IF_END34
 push local 1
 call Output.printString 1
 pop temp 0
@@ -2890,7 +2854,7 @@ push local 0
 push constant 1
 add
 pop local 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP33
+label $_WHILE_END33
 push constant 0
 return

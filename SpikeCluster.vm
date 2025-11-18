@@ -6,21 +6,19 @@ push pointer 0
 call SpikeCluster.reset 1
 pop temp 0
 push static 0
-not
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+if-goto $_IF_FALSE0
 push constant 25
 pop static 0
-label IF_FALSE0
+goto $_IF_END0
+label $_IF_FALSE0
+label $_IF_END0
 push static 1
-not
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+if-goto $_IF_FALSE1
 push constant 20
 pop static 1
-label IF_FALSE1
+goto $_IF_END1
+label $_IF_FALSE1
+label $_IF_END1
 push constant 0
 pop this 0
 push pointer 0
@@ -33,12 +31,13 @@ pop static 0
 push static 0
 push constant 25
 lt
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE2
 push constant 24
 pop static 0
-label IF_FALSE0
+goto $_IF_END2
+label $_IF_FALSE2
+label $_IF_END2
 push constant 0
 return
 function SpikeCluster.update 1
@@ -47,9 +46,8 @@ pop pointer 0
 push this 5
 push constant 30
 gt
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE3
 push this 3
 push constant 1
 sub
@@ -64,31 +62,33 @@ sub
 pop this 7
 push constant 0
 return
-label IF_FALSE0
+goto $_IF_END3
+label $_IF_FALSE3
+label $_IF_END3
 push this 3
 pop local 0
 push this 4
 push constant 1
 eq
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE4
 push local 0
 call Graphics.eraseSpike1 1
 pop temp 0
-goto IF_END1
-label IF_FALSE1
+goto $_IF_END4
+label $_IF_FALSE4
 push this 4
 push constant 2
 eq
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+not
+if-goto $_IF_FALSE5
 push local 0
 call Graphics.eraseSpike2 1
 pop temp 0
-label IF_FALSE2
-label IF_END1
+goto $_IF_END5
+label $_IF_FALSE5
+label $_IF_END5
+label $_IF_END4
 push this 3
 push constant 1
 sub
@@ -104,37 +104,38 @@ pop this 7
 push this 7
 push constant 0
 lt
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
+not
+if-goto $_IF_FALSE6
 push pointer 0
 call SpikeCluster.reset 1
 pop temp 0
 push constant 0
 return
-label IF_FALSE3
+goto $_IF_END6
+label $_IF_FALSE6
+label $_IF_END6
 push this 4
 push constant 1
 eq
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
+not
+if-goto $_IF_FALSE7
 push this 3
 call Graphics.drawSpike1 1
 pop temp 0
-goto IF_END4
-label IF_FALSE4
+goto $_IF_END7
+label $_IF_FALSE7
 push this 4
 push constant 2
 eq
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
+not
+if-goto $_IF_FALSE8
 push this 3
 call Graphics.drawSpike2 1
 pop temp 0
-label IF_FALSE5
-label IF_END4
+goto $_IF_END8
+label $_IF_FALSE8
+label $_IF_END8
+label $_IF_END7
 push constant 0
 return
 function SpikeCluster.dispose 0
@@ -155,27 +156,27 @@ pop this 4
 push this 4
 push constant 1
 eq
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE9
 push constant 21
 pop this 1
 push constant 1
 pop this 2
-goto IF_END0
-label IF_FALSE0
+goto $_IF_END9
+label $_IF_FALSE9
 push this 4
 push constant 2
 eq
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE10
 push constant 16
 pop this 1
 push constant 2
 pop this 2
-label IF_FALSE1
-label IF_END0
+goto $_IF_END10
+label $_IF_FALSE10
+label $_IF_END10
+label $_IF_END9
 push constant 244
 push this 1
 sub
@@ -212,12 +213,13 @@ function SpikeCluster.collision 0
 push argument 0
 pop pointer 0
 push this 0
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE11
 push constant 0
 return
-label IF_FALSE0
+goto $_IF_END11
+label $_IF_FALSE11
+label $_IF_END11
 push this 5
 push argument 3
 gt
@@ -225,12 +227,13 @@ push argument 1
 push this 7
 gt
 or
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE12
 push constant 0
 return
-label IF_FALSE1
+goto $_IF_END12
+label $_IF_FALSE12
+label $_IF_END12
 push this 6
 push argument 4
 gt
@@ -238,12 +241,13 @@ push argument 2
 push this 8
 gt
 or
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+not
+if-goto $_IF_FALSE13
 push constant 0
 return
-label IF_FALSE2
+goto $_IF_END13
+label $_IF_FALSE13
+label $_IF_END13
 push constant 0
 not
 pop this 0

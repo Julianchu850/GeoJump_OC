@@ -1,4 +1,3 @@
-
 /**
  * Cube.jack
  * Geometry Dash Edition - Personaje del jugador
@@ -19,105 +18,90 @@
  * - Gravedad invertida: cubo en el techo, salta hacia abajo
  */
 
-
 class Cube {
     // -------- constantes estáticas de física --------
-    static int gravityConst;      // fuerza de gravedad (positivo = abajo)
-    static int jumpVelocity;      // velocidad inicial de salto (negativo = arriba)
+    static int gravityConst;       // fuerza de gravedad (positivo = abajo)
+    static int jumpVelocity;       // velocidad inicial del salto (negativo = arriba)
     
     // -------- campos de instancia --------
     
     // posición y movimiento
-    field int location;           // ubicación actual en memoria de pantalla
-    field int initialLocation;    // posición del nivel del suelo (punto de reinicio)
-    field int velocity;           // velocidad vertical actual
-    field int height;             // posición Y actual (en filas de palabras)
-    field int initialHeight;      // altura del nivel del suelo
+    field int location;            // ubicación actual en memoria de pantalla
+    field int initialLocation;     // posición del nivel del suelo
+    field int velocity;            // velocidad vertical actual
+    field int height;              // posición Y actual (en filas de palabra)
+    field int initialHeight;       // altura del suelo
     
     // estado visual
-    field int cubeType;           // qué variante de cubo (1-4)
-    field int clock;              // temporizador de animación (poco usado)
+    field int cubeType;            // variante del cubo (1–4)
+    field int clock;               // temporizador
     
     // sistema de inversión de gravedad
-    field boolean gravityFlipped; // true = boca abajo en el techo
-    field int flipCooldown;       // previene spam rápido de inversión
+    field boolean gravityFlipped;  // true = boca abajo
+    field int flipCooldown;        // cooldown para evitar spam
     
-    // campos legacy (mantenidos para compatibilidad con código viejo)
-    field boolean feetPos;        // cuadro de animación alternante (no usado)
-    field int crouchState;        // legacy, mantenido para compatibilidad
+    // legacy
+    field boolean feetPos;
+    field int crouchState;
     
     /**
      * Constructor
-     * pos: ubicación en memoria de pantalla (usar 7300 para posición por defecto en el suelo)
      */
     constructor Cube new(int pos) {
-        var String line;
-        // inicializar constantes de física
-        let gravityConst = 2;       // reducido de 3 para sensación más precisa
-        let jumpVelocity = -24;     // reducido de -30 para más control
+        // inicializar constantes
+        let gravityConst = 2;
+        let jumpVelocity = -24;
         
         // establecer posición inicial
         let location = pos;
         if (location = 0) {
-            let location = 7300;    // por defecto: cerca del lado izquierdo, nivel del suelo
+            let location = 7300;
         }
         
-        // calcular alturas (altura en filas de palabras, no píxeles)
-        let initialHeight = ((location / 32) - 16);  // 16 palabras de alto - FIXED: agregados paréntesis extra
+        // calcular alturas
+        let initialHeight = ((location / 32) - 16);
         let height = initialHeight;
         let initialLocation = location;
         
-        // inicializar movimiento
+        // movimiento
         let velocity = 0;
         let clock = 0;
         
-        // sistema de gravedad
+        // gravedad
         let gravityFlipped = false;
         let flipCooldown = 0;
         
-        // campos legacy
+        // legacy
         let feetPos = true;
         let crouchState = 0;
         
-        // establecer el cubo elegido por jugador
-        let cubeType = Startscreen.getCubeNum();
-    
-        // dibujar cubo inicial
-        do drawCube(cubeType);
+        // seleccionar cubo aleatorio (versión REMOTA)
+        let cubeType = LCGRandom.randRange(1, 4);
         
+        do drawCube();
         return this;
     }
     
-    /** liberar este objeto */
+    /** liberar objeto */
     method void dispose() {
         do Memory.deAlloc(this);
         return;
     }
     
-    // -------- métodos de dibujo --------
+    // -------- dibujo --------
     
-    /** dibujar cubo basado en la variante seleccionada */
-    method void drawCube(int cubeNum) {
-        if (cubeNum = 1) { 
-            do Graphics.drawCube1(location);
-        }
+    method void drawCube() {
+        if (cubeType = 1) { do Graphics.drawCube1(location); }
         else {
-            if (cubeNum = 2) {
-                do Graphics.drawCube2(location);
-            }
+            if (cubeType = 2) { do Graphics.drawCube2(location); }
             else {
-                if (cubeNum = 3) { 
-                    do Graphics.drawCube3(location);
-                }
-                else {
-                    do Graphics.drawCube4(location);
-                }
+                if (cubeType = 3) { do Graphics.drawCube3(location); }
+                else { do Graphics.drawCube4(location); }
             }
         }
         return;
     }
     
-    /** borrar cubo de la posición actual */
     method void eraseCube(int loc) {
         do Graphics.eraseCube(loc);
         return;
@@ -125,162 +109,120 @@ class Cube {
     
     // -------- física y movimiento --------
     
-    /**
-     * update:
-     * llamado cada frame desde el bucle del juego
-     * maneja gravedad, movimiento, colisiones con suelo/techo, y dibujo
-     * retorna:
-     *   -1 = actualización normal
-     *    0 = reservado para eventos especiales (no usado ahora)
-     */
     method int update() {
         var int oldLocation;
         var int movementDelta;
         
-        // decrementar cooldown de inversión
+        // cooldown
         if (flipCooldown > 0) {
             let flipCooldown = flipCooldown - 1;
         }
         
-        // guardar posición antigua para borrar
+        // guardar posición anterior
         let oldLocation = location;
         
-        // aplicar gravedad a velocidad
+        // gravedad → velocidad
         if (gravityFlipped) {
-            let velocity = velocity - gravityConst;   // invertido: gravedad tira hacia arriba
+            let velocity = velocity - gravityConst;
         }
         else {
-            let velocity = velocity + gravityConst;   // normal: gravedad tira hacia abajo
+            let velocity = velocity + gravityConst;
         }
         
-        // aplicar velocidad a posición
-        let location = location + (32 * velocity);    // 32 palabras por fila
+        // velocidad → posición
+        let location = location + (32 * velocity);
         let height = height + velocity;
         
-        // gravedad normal: verificar colisión con suelo
-        if (~gravityFlipped) {
-            if (location > initialLocation) {
-                let location = initialLocation;
-                let height = initialHeight;
-                let velocity = 0;
-            }
+        // LIMITES DE SEGURIDAD
+        if (location < 0) {
+            let location = 0;
+            let height = 0;
+            if (velocity < 0) { let velocity = 0; }
         }
-        // gravedad invertida: verificar colisión con techo
         else {
-            // techo en altura 32 (deja espacio para UI arriba)
-            if (height < 32) {
-                let height = 32;
-                let location = 16384 + (32 * 32);   // posición simple del techo
-                let velocity = 0;
+            if (gravityFlipped) {
+                if (height < 32) {
+                    let height = 32;
+                    let location = (32 * 32);
+                    let velocity = 0;
+                }
             }
         }
         
-        // calcular qué tan lejos nos movimos
+        if (location > initialLocation) {
+            let location = initialLocation;
+            let height = initialHeight;
+            let velocity = 0;
+        }
+        
+        // calcular movimiento
         let movementDelta = (location - oldLocation) / 32;
         
-        // solo redibujar si la posición cambió
+        // redibujar si hubo movimiento
         if (~(movementDelta = 0)) {
             do eraseCube(oldLocation);
-            do drawCube(cubeType);
+            do drawCube();
         }
         
         return -1;
     }
     
-    /**
-     * jump:
-     * hace que el cubo salte (o caiga si la gravedad está invertida)
-     * retorna:
-     *   5 = salto exitoso desde el suelo o techo
-     *  -1 = ya está en el aire (sin salto)
-     */
+    // -------- salto --------
+    
     method int jump() {
-        // gravedad normal: saltar si está en el suelo
         if (~gravityFlipped) {
             if (location = initialLocation) {
-                let velocity = jumpVelocity;   // velocidad negativa = hacia arriba
+                let velocity = jumpVelocity;
                 return true;
             }
         }
-        // gravedad invertida: saltar (caer) si está en el techo
         else {
             if (height = 32) {
-                let velocity = -jumpVelocity;  // velocidad positiva = hacia abajo aquí
+                let velocity = -jumpVelocity;
                 return true;
             }
         }
-        
         return false;
     }
     
-    /**
-     * flipGravity:
-     * alterna la dirección de la gravedad
-     * solo puede invertir mientras está en medio del aire y cuando el cooldown es cero
-     */
+    // -------- invertir gravedad --------
+    
     method void flipGravity() {
-        // solo puede invertir en medio del aire y si el cooldown lo permite
-        if ((flipCooldown = 0) & (~(velocity = 0))) {  // FIXED: verificación explícita para velocity != 0
-            // alternar gravedad
+        if ((flipCooldown = 0) & (~(velocity = 0))) {
             let gravityFlipped = ~gravityFlipped;
-            
-            // revertir velocidad para transición suave
-            let velocity = -velocity;
-            
-            // establecer cooldown para prevenir spam (aproximadamente 10 frames)
             let flipCooldown = 10;
         }
         return;
     }
     
-    // -------- ayudantes de entrada --------
-    
-    /**
-     * crouch:
-     * reutilizado como disparador de inversión de gravedad (flecha abajo)
-     */
     method void crouch() {
         do flipGravity();
         return;
     }
     
-    /**
-     * setVelocity:
-     * establece directamente la velocidad vertical (usado por trampolín, etc.)
-     */
     method void setVelocity(int vel) {
         let velocity = vel;
         return;
     }
     
-    // -------- ayudantes de colisión --------
+    // -------- colisiones --------
     
-    /** retorna el borde superior actual del cubo (en filas de palabras) */
     method int collisionBoxTly() {
         return height;
     }
     
-    /** retorna true si el cubo está en el suelo o en el techo - FIXED */
     method boolean isGrounded() {
         if (gravityFlipped) {
-            return (height = 32);               // en el techo
+            return (height = 32);
         }
-        return (location = initialLocation);    // en el suelo - FIXED: eliminado else, retorno directo
+        return (location = initialLocation);
     }
     
-    /** retorna true si la gravedad está invertida */
     method boolean isGravityFlipped() {
         return gravityFlipped;
     }
     
-    // -------- ajuste estático de física --------
-    
-     /**
-     * setPhysics:
-     * ajusta la gravedad global y la fuerza de salto
-     * gravedad recomendada: 2 a 4
-     * salto recomendado: entre -20 y -30
-     */
+    // -------- ajustes estáticos --------
     
     function void setPhysics(int gravity, int jumpPower) {
         let gravityConst = gravity;
@@ -288,26 +230,15 @@ class Cube {
         return;
     }
     
-        /**
-     * updateJump:
-     * ajusta la fuerza del salto (logros, power-ups, etc.)
-     * change: cuánto modificar el salto
-     */
     function void updateJump(int change) {
         let jumpVelocity = jumpVelocity - (change * 5);
         
-        // mantener velocidad de salto en límites razonables
         if ((jumpVelocity < (-45)) | (jumpVelocity > (-15))) {
-            let jumpVelocity = -24;  // resetear a valor por defecto
+            let jumpVelocity = -24;
         }
         return;
     }
     
-    
-        /**
-     * swapFeet:
-     * solo para compatibilidad con código viejo (sin efecto real)
-     */
     method void swapFeet() {
         let feetPos = ~feetPos;
         return;

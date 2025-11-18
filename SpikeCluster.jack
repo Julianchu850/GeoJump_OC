@@ -1,9 +1,8 @@
 class SpikeCluster {
 // Registra qué tan a la derecha se colocó el último grupo de pinchos (en unidades de palabra)
     static int rightmost;
-    static int minGap;  
-    field boolean hasCollided;  
-
+    static int minGap;  // ← AGREGAR: Contador para movimiento lento
+    field boolean hasCollided;  // ✅ Nuevo campo
 
     
     field int height;          // in pixels
@@ -25,9 +24,9 @@ class SpikeCluster {
             let rightmost = 25;
         }
         if (~minGap) {
-            let minGap = 20;  // Mínimo 20 palabras entre spikes
+            let minGap = 20;  // ✅ Mínimo 12 palabras entre spikes
         }
-            let hasCollided = false;  
+            let hasCollided = false;  // ✅ Inicializar
 
         return this;
     }
@@ -110,7 +109,7 @@ method void update() {
         let bry = 244;
         let brx = tlx + width;
         let location = (7808 - (height * 32)) + tlx;
-        let hasCollided = false;  // ✅ Reset cuando reaparece
+        let hasCollided = false;  // Reset cuando reaparece
 
         return;
     }
