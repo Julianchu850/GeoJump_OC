@@ -1,0 +1,32 @@
+/** Main */
+class Main {
+    function void main() {
+        var int gameState; // 0 = quit, otherwise score
+        var GeometryGame game;
+        
+        // initialize randomness
+        do LCGRandom.setSeed(Math.abs(Startscreen.go()));
+        
+        // initialize achievements
+        do Achievements.init();
+        
+        // first game
+        let game = GeometryGame.new(gameState);
+        let gameState = game.run(); 
+        
+        // replay loop
+        while (~(gameState = 0)) {
+            if (Endscreen.crash()) { // user wants to play again
+                do game.dispose();
+                let game = GeometryGame.new(gameState); // pass previous score if you want
+                let gameState = game.run();
+            }
+            else {
+                let gameState = 0;
+            }
+        }
+        
+        do game.dispose();
+        return;
+    }
+}
