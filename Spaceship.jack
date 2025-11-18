@@ -1,0 +1,128 @@
+class Spaceship {
+
+    // Shared spawn position for all spaceships (in word units)
+    static int rightmost;
+    static int moveCounter;  // ← AGREGAR: Contador para movimiento lento
+
+    // Screen memory word index of the top-left of the sprite
+    field int location;
+
+    // Axis-aligned bounding box (AABB) in "word" (x) and "pixel" (y)
+    field int tlx;   // top-left x (words)
+    field int tly;   // top-left y (pixels)
+    field int brx;   // bottom-right x (words)
+    field int bry;   // bottom-right y (pixels)
+
+    /** constructor */
+    constructor Spaceship new() {
+        let location = 0;
+        do reset();
+        let rightmost = 30;
+        let moveCounter = 0;  // ← AGREGAR: Inicializar contador
+        return this;
+    }
+
+    /** dispose */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** decrementRightmost - MODIFICADO */
+    function void decrementRightmost() {
+        // ✅ CAMBIO: Solo decrementa cada 2 frames
+        let moveCounter = moveCounter + 1;
+        if (moveCounter > 3) {  // Cambiar a 2, 3, 4... para más lento
+            let moveCounter = 0;
+            let rightmost = rightmost - 1;
+            if (rightmost < 28) {
+                let rightmost = 28;
+            }
+        }
+        return;
+    }
+
+    /** update - MODIFICADO para movimiento más lento */
+    method void update() {
+        var int oldLocation;
+
+        // Not yet visible on screen
+        if (tlx > 28) {
+            // ✅ CAMBIO: Solo mueve cada 2 frames
+            if ((moveCounter / 2) * 2 = moveCounter) {  // Si moveCounter es par
+                let location = location - 1;
+                let tlx = tlx - 1;
+                let brx = brx - 1;
+            }
+            return;
+        }
+
+        // Erase old sprite
+        let oldLocation = location;
+        do Graphics.eraseSpaceship(oldLocation);
+
+        // ✅ CAMBIO: Move left one word SOLO cada 2 frames
+        if ((moveCounter / 2) * 2 = moveCounter) {  // Si moveCounter es par
+            let location = location - 1;
+            let tlx = tlx - 1;
+            let brx = brx - 1;
+        }
+
+        // Off the left side of the screen → spawn a new one
+        if (brx < 0) {
+            do reset();
+            return;
+        }
+
+        // Draw at new location
+        do Graphics.drawSpaceship(location);
+
+        return;
+    }
+
+    /** reset */
+    method void reset() {
+        var int heightType;
+        var int spriteHeight;
+
+        if (location) {
+            do Graphics.eraseSpaceship(location);
+        }
+
+        let heightType = LCGRandom.randRange(0, 9);
+        if (heightType < 7) {
+            let tly = 210;
+        }
+        else {
+            if (heightType = 9) {
+                let tly = 235;
+            }
+            else {
+                let tly = 215;
+            }
+        }
+
+        let spriteHeight = 13;
+        let tlx = rightmost + LCGRandom.randRange(20, 1000);
+        let rightmost = tlx;
+        let brx = tlx + 1;
+        let bry = tly + spriteHeight;
+        let location = (tly * 32) + tlx;
+
+        return;
+    }
+
+    /** collision */
+    method int collision(int tl1x, int tl1y, int br1x, int br1y) {
+        if ((tlx > br1x) | (tl1x > brx)) {
+            return 0;
+        }
+        if ((tly > br1y) | (tl1y > bry)) {
+            return 0;
+        }
+        if (br1y > (tly + 8)) {
+            return 1;
+        }
+        return -1;
+    }
+}
