@@ -1,0 +1,144 @@
+class Spaceship {
+
+    // Shared spawn position for all spaceships (in word units)
+    static int rightmost;
+    static int minGap;  
+
+    // Screen memory word index of the top-left of the sprite
+    field int location;
+
+    // Axis-aligned bounding box (AABB) in "word" (x) and "pixel" (y)
+    field int tlx;   // top-left x (words)
+    field int tly;   // top-left y (pixels)
+    field int brx;   // bottom-right x (words)
+    field int bry;   // bottom-right y (pixels)
+
+    /** constructor */
+    constructor Spaceship new() {
+        let location = 0;
+        do reset(false);
+        if (~rightmost) {
+            let rightmost = 30;
+        }
+        if (~minGap) {
+            let minGap = 20;  // ✅ Mínimo 12 palabras entre naves 
+        }
+        return this;
+    }
+
+    /** dispose */
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+     /** decrementRightmost - Sin contador, movimiento directo */
+    function void decrementRightmost() {
+        let rightmost = rightmost - 1;
+        if (rightmost < 28) {
+            let rightmost = 28;
+        }
+        return;
+    }
+
+    /** update - Movimiento continuo sin delays */
+    method void update() {
+        var int oldLocation;
+
+        // Not yet visible on screen
+        if (tlx > 28) {
+            let location = location - 1;
+            let tlx = tlx - 1;
+            let brx = brx - 1;
+            return;
+        }
+
+        // Erase old sprite
+        let oldLocation = location;
+        do Graphics.eraseSpaceship(oldLocation);
+
+        // Move left one word cada frame
+        let location = location - 1;
+        let tlx = tlx - 1;
+        let brx = brx - 1;
+
+        // Off the left side of the screen → spawn a new one
+        if (brx < 0) {
+            do reset(true);
+            return;
+        }
+
+        // Draw at new location
+        do Graphics.drawSpaceship(location);
+
+        return;
+    }
+
+    /** reset */
+    method void reset(boolean borrar) {
+        var int r; // Variable para el número aleatorio
+        var int spriteHeight;
+
+        // Si la nave ya tiene posición, la borramos antes de moverla
+        if (location) {
+            if (borrar) {
+                do Graphics.eraseSpaceship(location);
+            }
+        }
+
+        // --- NUEVA LÓGICA 50/50 ---
+        // Lanzamos una moneda: 0 o 1
+        let r = LCGRandom.randRange(0, 1);
+
+        if (r = 1) {
+            // 50% de probabilidad: TECHO
+            let tly = 35; 
+        }
+        else {
+            // 50% de probabilidad: SUELO
+            // Dentro del suelo, variamos un poco la altura para que no sea monótono
+            let r = LCGRandom.randRange(0, 2);
+            if (r = 0) { 
+                let tly = 210; 
+            }
+            else {
+                if (r = 1) { 
+                    let tly = 215; 
+                }
+                else { 
+                    let tly = 235; // Muy bajo
+                }
+            }
+        }
+        // --------------------------
+
+        let spriteHeight = 13;
+        
+        // Calculamos la posición X para que no se solapen
+        let tlx = rightmost + LCGRandom.randRange(20, 200) + minGap;
+        if (tlx > rightmost) {
+            let rightmost = tlx;
+        }
+        
+        // Definimos la caja de colisión y ubicación en memoria
+        let brx = tlx + 1;
+        let bry = tly + spriteHeight;
+        let location = (tly * 32) + tlx;
+
+        return;
+    }
+
+    /** collision */
+    method int collision(int tl1x, int tl1y, int br1x, int br1y) {
+        if ((tlx > br1x) | (tl1x > brx)) {
+            return 0;
+        }
+        if ((tly > br1y) | (tl1y > bry)) {
+            return 0;
+        }
+        if (br1y > (tly + 10)) {  // 10 píxeles = 77% de la nave es zona de rebote
+    return 1;
+}
+        return -1;
+    }
+}

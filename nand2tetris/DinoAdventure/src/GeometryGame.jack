@@ -1,0 +1,281 @@
+/**
+ * GeometryGame 
+ * GeometryGame.run returns score when the player crashes, and 0 when the player quits (q)
+ */
+class GeometryGame {
+    field int delay;
+    field int absoluteDelay;
+    
+    field Cube player;
+    field int playerTlx;
+    field int playerTly;
+    field int playerBrx;
+    field int playerBry;
+    
+    field Spaceship flying0;
+    field Spaceship flying1;
+    field Spaceship flying2;
+
+    field SpikeCluster cactus0;
+    field SpikeCluster cactus1;
+    field SpikeCluster cactus2;
+    field SpikeCluster cactus3;
+    field SpikeCluster cactus4;
+    
+    field boolean crashed;
+    
+    field int achievementTimeoutCycles;
+    field int clock;
+    field int score;
+    field int highScore;
+    field int lastCycleKey;
+    
+    constructor GeometryGame new(int highestScore) {
+        let player = Cube.new(7300);
+        let playerTlx = 4;
+        let playerBrx = 5;
+        let playerTly = player.collisionBoxTly();
+        let playerBry = playerTly + 32;
+        
+        let flying0 = Spaceship.new();
+        let flying1 = Spaceship.new();
+        let flying2 = Spaceship.new();
+        
+        let cactus0 = SpikeCluster.new();
+        let cactus1 = SpikeCluster.new();
+        let cactus2 = SpikeCluster.new();
+        let cactus3 = SpikeCluster.new();
+        let cactus4 = SpikeCluster.new();
+        
+        let absoluteDelay = 25;
+        let delay = absoluteDelay - 4;
+        let crashed = false;
+        
+        let achievementTimeoutCycles = -1;
+        let clock = 0;
+        let score = 0;
+        let highScore = highestScore;
+        let lastCycleKey = 0;
+        
+        // setup screen
+        do Screen.clearScreen();
+        do Output.moveCursor(0, 0);
+        do Output.printString("High Score: ");
+        do Output.moveCursor(0, 12);
+        do Output.printInt(highScore);
+        
+        do Achievements.writeAchievementsLeft();
+        
+        do Output.moveCursor(1, 0);
+        do Output.printString("Score: ");
+        do Output.moveCursor(1, 7);
+        do Output.printInt(score);
+        
+        return this;
+    }
+
+    method void dispose() {
+        do player.dispose();
+        
+        do flying0.dispose();
+        do flying1.dispose();
+        do flying2.dispose();
+        
+        do cactus0.dispose();
+        do cactus1.dispose();
+        do cactus2.dispose();
+        do cactus3.dispose();
+        do cactus4.dispose();
+        
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void setAchievementTimeout(int durationCycles) {
+        // if durationCycles == 0, use default duration
+        if (durationCycles) {
+            let achievementTimeoutCycles = durationCycles;
+        }
+        else {
+            let achievementTimeoutCycles = 150;
+        }
+        let delay = absoluteDelay - 4; // reset delay if necessary
+        return;
+    }
+
+    method boolean checkInput() {
+        var int key;
+        var boolean salto;
+        let key = Keyboard.keyPressed();
+        let salto = false;
+
+        if ((key = 32) | (key = 131)) { // space bar or up arrow to jump
+            let salto = player.jump();
+            
+            // only counts toward jump achievement if user is not holding the key
+            // and if player.jump() reports a jump from ground or ceiling
+            if (~(key = lastCycleKey) & (salto)) {
+                if (Achievements.complete(5)) { do setAchievementTimeout(0); }
+            }
+        }
+        else {
+            if (key = 133) { // down arrow → gravity flip
+                do player.crouch(); // in Cube, this calls flipGravity()
+                if (Achievements.complete(7)) { do setAchievementTimeout(0); }
+            }
+            else {
+                if (key = 81) {  // Q to quit
+                    return false;
+                }
+                else {
+                    if ((key = 130) & ~(lastCycleKey = 130)) { // left: adjust jump velocity
+                        do Cube.updateJump(-1);
+                        if (Achievements.complete(1)) { do setAchievementTimeout(0); }
+                    }
+                    else {
+                        if ((key = 132) & ~(lastCycleKey = 132)) { // right: adjust jump velocity
+                            do Cube.updateJump(1);
+                            if (Achievements.complete(1)) { do setAchievementTimeout(0); }
+                        }
+                        else {
+                            if ((key > 47) & (key < 58)) { // digit key: change game speed
+                                let delay = absoluteDelay - (key - 48); 
+                                if (delay < 1) {
+                                    let delay = absoluteDelay - 4;
+                                }
+                                if (Achievements.complete(6)) { do setAchievementTimeout(250); }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        let lastCycleKey = key;
+        return true;
+    }
+
+
+
+    method int run() {
+        var int temp;
+
+        while (~crashed) {
+            if (checkInput()) {
+                // update each object's state
+                if (player.update() = 0) { // special event from player.update()
+                    if (Achievements.complete(0)) { do setAchievementTimeout(0); }
+                }
+                
+                do flying0.update();
+                do flying1.update();
+                do flying2.update();
+                do Spaceship.decrementRightmost();
+                
+                do cactus0.update();
+                do cactus1.update();
+                do cactus2.update();
+                do cactus3.update();
+                do cactus4.update();
+                do SpikeCluster.decrementRightmost();
+                            
+                // check for collisions
+                let playerTly = player.collisionBoxTly();
+                let playerBry = playerTly + 32;
+                
+                // check spaceship collisions and springboarding
+                // Only one can collide at a time, so we sum collision returns:
+                // -1 = springboard, 1 = crash, 0 = no collision
+                let temp =
+                    flying0.collision(playerTlx, playerTly, playerBrx, playerBry) +
+                    flying1.collision(playerTlx, playerTly, playerBrx, playerBry) +
+                    flying2.collision(playerTlx, playerTly, playerBrx, playerBry);
+                
+                if (temp < 0) { // springboarding
+                    if (Achievements.complete(8)) { do setAchievementTimeout(0); }
+                    
+                    // bounce the cube upward
+                    do player.setVelocity(-20);
+                    
+                    // reset the spaceship that was hit
+                    if (flying0.collision(playerTlx, playerTly, playerBrx, playerBry)) { do flying0.reset(true); }
+                    if (flying1.collision(playerTlx, playerTly, playerBrx, playerBry)) { do flying1.reset(true); }
+                    if (flying2.collision(playerTlx, playerTly, playerBrx, playerBry)) { do flying2.reset(true); }
+                }
+                else {
+                    if (temp > 0) { // crashed into spaceship
+                        let crashed = true;
+                    }
+                }
+                
+                // spike collisions
+                if (cactus0.collision(playerTlx, playerTly, playerBrx, playerBry) | 
+                    cactus1.collision(playerTlx, playerTly, playerBrx, playerBry) |
+                    cactus2.collision(playerTlx, playerTly, playerBrx, playerBry) |
+                    cactus3.collision(playerTlx, playerTly, playerBrx, playerBry) |
+                    cactus4.collision(playerTlx, playerTly, playerBrx, playerBry)) {
+
+                     // Intenta completar el achievement 2
+                // Si retorna TRUE = primera colisión (perdona)
+                // Si retorna FALSE = ya estaba completo (crashea)
+                if (Achievements.complete(2)) {
+                    // Primera vez: solo muestra mensaje
+                    do setAchievementTimeout(150);
+                }
+                else {
+                    // Segunda+ vez: game over
+                    let crashed = true;
+                }
+                
+                // ✅ NO SE RESETEA NADA - Flujo continuo
+            }
+
+            // game speed delay
+            do Sys.wait(delay);
+            
+        }
+        else {
+            return 0; // quit
+        }
+
+            // update and display score every 4 cycles
+            if (clock = 3) {
+                let clock = 0; 
+                let score = score + 1;
+                do Output.moveCursor(1, 7);
+                do Output.printInt(score);
+                
+                // update delay at certain scores
+                if ((score = 150) | (score = 250) | (score = 500) | (score = 1000)) {
+                    let absoluteDelay = absoluteDelay - 1;
+                    let delay = absoluteDelay - 4;
+                    
+                    // check for 1000 point achievement
+                    if (score = 1000) {
+                        do Achievements.complete(4);
+                        do setAchievementTimeout(0);
+                    }
+                }
+                
+                // if score > 1500, see if game is over
+                if (score > 1499) {
+                    do Achievements.complete(-1);
+                }
+            }
+            else {
+                let clock = clock + 1;
+            }
+            
+            if (achievementTimeoutCycles = 0) {
+                do Achievements.clearMessage();
+            }
+            let achievementTimeoutCycles = achievementTimeoutCycles - 1;
+        }
+
+        // end of game: return best score
+        if (score > highScore) {
+            return score;
+        }
+        return highScore;
+    }
+}
