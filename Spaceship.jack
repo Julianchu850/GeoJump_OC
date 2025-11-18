@@ -1,13 +1,13 @@
 class Spaceship {
 
-    // Shared spawn position for all spaceships (in word units)
+// Posición de aparición compartida para todas las naves (en unidades de palabra)
     static int rightmost;
     static int minGap;  
 
-    // Screen memory word index of the top-left of the sprite
+// Índice de palabra en memoria de pantalla correspondiente a la esquina superior izquierda del sprite
     field int location;
 
-    // Axis-aligned bounding box (AABB) in "word" (x) and "pixel" (y)
+// Caja delimitadora alineada a ejes (AABB) en "palabras" (x) y "píxeles" (y)
     field int tlx;   // top-left x (words)
     field int tly;   // top-left y (pixels)
     field int brx;   // bottom-right x (words)
@@ -21,7 +21,7 @@ class Spaceship {
             let rightmost = 30;
         }
         if (~minGap) {
-            let minGap = 20;  // ✅ Mínimo 12 palabras entre naves 
+            let minGap = 20;  // Mínimo 20 palabras entre naves 
         }
         return this;
     }
@@ -68,7 +68,7 @@ class Spaceship {
             return;
         }
 
-        // Draw at new location
+        // Dibujar en nueva locacion
         do Graphics.drawSpaceship(location);
 
         return;
@@ -119,7 +119,7 @@ class Spaceship {
         if ((tly > br1y) | (tl1y > bry)) {
             return 0;
         }
-        if (br1y > (tly + 10)) {  // 10 píxeles = 77% de la nave es zona de rebote
+        if (br1y > (tly + 10)) {  // 10 píxeles de la nave es zona de rebote
     return 1;
 }
         return -1;

@@ -1,6 +1,6 @@
 /**
  * GeometryGame 
- * GeometryGame.run returns score when the player crashes, and 0 when the player quits (q)
+ * GeometryGame.run retorna el puntaje cuando el jugador choca, y 0 cuando el jugador sale (q)
  */
 class GeometryGame {
     field int delay;
@@ -57,7 +57,7 @@ class GeometryGame {
         let highScore = highestScore;
         let lastCycleKey = 0;
         
-        // setup screen
+        // configurar pantalla
         do Screen.clearScreen();
         do Output.moveCursor(0, 0);
         do Output.printString("High Score: ");
@@ -92,14 +92,14 @@ class GeometryGame {
     }
 
     method void setAchievementTimeout(int durationCycles) {
-        // if durationCycles == 0, use default duration
+        // si durationCycles == 0, usar duración por defecto
         if (durationCycles) {
             let achievementTimeoutCycles = durationCycles;
         }
         else {
             let achievementTimeoutCycles = 150;
         }
-        let delay = absoluteDelay - 4; // reset delay if necessary
+        let delay = absoluteDelay - 4; // resetear delay si es necesario
         return;
     }
 
@@ -109,36 +109,36 @@ class GeometryGame {
         let key = Keyboard.keyPressed();
         let salto = false;
 
-        if ((key = 32) | (key = 131)) { // space bar or up arrow to jump
+        if ((key = 32) | (key = 131)) { // barra espaciadora o flecha arriba para saltar
             let salto = player.jump();
             
-            // only counts toward jump achievement if user is not holding the key
-            // and if player.jump() reports a jump from ground or ceiling
+            // solo cuenta para el logro de salto si el usuario no está manteniendo la tecla
+            // y si player.jump() reporta un salto desde el suelo o techo
             if (~(key = lastCycleKey) & (salto)) {
                 if (Achievements.complete(5)) { do setAchievementTimeout(0); }
             }
         }
         else {
-            if (key = 133) { // down arrow → gravity flip
-                do player.crouch(); // in Cube, this calls flipGravity()
+            if (key = 133) { // flecha abajo → inversión de gravedad
+                do player.crouch(); // en Cube, esto llama a flipGravity()
                 if (Achievements.complete(7)) { do setAchievementTimeout(0); }
             }
             else {
-                if (key = 81) {  // Q to quit
+                if (key = 81) {  // Q para salir
                     return false;
                 }
                 else {
-                    if ((key = 130) & ~(lastCycleKey = 130)) { // left: adjust jump velocity
+                    if ((key = 130) & ~(lastCycleKey = 130)) { // izquierda: ajustar velocidad de salto
                         do Cube.updateJump(-1);
                         if (Achievements.complete(1)) { do setAchievementTimeout(0); }
                     }
                     else {
-                        if ((key = 132) & ~(lastCycleKey = 132)) { // right: adjust jump velocity
+                        if ((key = 132) & ~(lastCycleKey = 132)) { // derecha: ajustar velocidad de salto
                             do Cube.updateJump(1);
                             if (Achievements.complete(1)) { do setAchievementTimeout(0); }
                         }
                         else {
-                            if ((key > 47) & (key < 58)) { // digit key: change game speed
+                            if ((key > 47) & (key < 58)) { // tecla dígito: cambiar velocidad del juego
                                 let delay = absoluteDelay - (key - 48); 
                                 if (delay < 1) {
                                     let delay = absoluteDelay - 4;
@@ -162,8 +162,8 @@ class GeometryGame {
 
         while (~crashed) {
             if (checkInput()) {
-                // update each object's state
-                if (player.update() = 0) { // special event from player.update()
+                // actualizar el estado de cada objeto
+                if (player.update() = 0) { // evento especial de player.update()
                     if (Achievements.complete(0)) { do setAchievementTimeout(0); }
                 }
                 
@@ -179,36 +179,36 @@ class GeometryGame {
                 do cactus4.update();
                 do SpikeCluster.decrementRightmost();
                             
-                // check for collisions
+                // verificar colisiones
                 let playerTly = player.collisionBoxTly();
                 let playerBry = playerTly + 32;
                 
-                // check spaceship collisions and springboarding
-                // Only one can collide at a time, so we sum collision returns:
-                // -1 = springboard, 1 = crash, 0 = no collision
+                // verificar colisiones con naves y trampolines
+                // Solo una puede colisionar a la vez, así que sumamos los retornos de colisión:
+                // -1 = trampolín, 1 = choque, 0 = sin colisión
                 let temp =
                     flying0.collision(playerTlx, playerTly, playerBrx, playerBry) +
                     flying1.collision(playerTlx, playerTly, playerBrx, playerBry) +
                     flying2.collision(playerTlx, playerTly, playerBrx, playerBry);
                 
-                if (temp < 0) { // springboarding
+                if (temp < 0) { // rebotando en trampolín
                     if (Achievements.complete(8)) { do setAchievementTimeout(0); }
                     
-                    // bounce the cube upward
+                    // rebotar el cubo hacia arriba
                     do player.setVelocity(-20);
                     
-                    // reset the spaceship that was hit
+                    // resetear la nave que fue golpeada
                     if (flying0.collision(playerTlx, playerTly, playerBrx, playerBry)) { do flying0.reset(true); }
                     if (flying1.collision(playerTlx, playerTly, playerBrx, playerBry)) { do flying1.reset(true); }
                     if (flying2.collision(playerTlx, playerTly, playerBrx, playerBry)) { do flying2.reset(true); }
                 }
                 else {
-                    if (temp > 0) { // crashed into spaceship
+                    if (temp > 0) { // chocó con nave
                         let crashed = true;
                     }
                 }
                 
-                // spike collisions
+                // colisiones con pinchos
                 if (cactus0.collision(playerTlx, playerTly, playerBrx, playerBry) | 
                     cactus1.collision(playerTlx, playerTly, playerBrx, playerBry) |
                     cactus2.collision(playerTlx, playerTly, playerBrx, playerBry) |
@@ -230,34 +230,34 @@ class GeometryGame {
                 // ✅ NO SE RESETEA NADA - Flujo continuo
             }
 
-            // game speed delay
+            // retardo de velocidad del juego
             do Sys.wait(delay);
             
         }
         else {
-            return 0; // quit
+            return 0; // salir
         }
 
-            // update and display score every 4 cycles
+            // actualizar y mostrar puntaje cada 4 ciclos
             if (clock = 3) {
                 let clock = 0; 
                 let score = score + 1;
                 do Output.moveCursor(1, 7);
                 do Output.printInt(score);
                 
-                // update delay at certain scores
+                // actualizar delay en ciertos puntajes
                 if ((score = 150) | (score = 250) | (score = 500) | (score = 1000)) {
                     let absoluteDelay = absoluteDelay - 1;
                     let delay = absoluteDelay - 4;
                     
-                    // check for 1000 point achievement
+                    // verificar logro de 1000 puntos
                     if (score = 1000) {
                         do Achievements.complete(4);
                         do setAchievementTimeout(0);
                     }
                 }
                 
-                // if score > 1500, see if game is over
+                // si puntaje > 1500, ver si el juego terminó
                 if (score > 1499) {
                     do Achievements.complete(-1);
                 }
@@ -272,7 +272,7 @@ class GeometryGame {
             let achievementTimeoutCycles = achievementTimeoutCycles - 1;
         }
 
-        // end of game: return best score
+        // fin del juego: retornar mejor puntaje
         if (score > highScore) {
             return score;
         }

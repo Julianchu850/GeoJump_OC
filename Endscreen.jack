@@ -2,7 +2,7 @@ class Endscreen {
     static String winPrompt;
     
     /** 
-     * Crash screen: returns true if player wants to play again.
+     * Pantalla de choque: devuelve true si el jugador quiere jugar de nuevo.
      */
     function boolean crash() {
         var boolean playAgain;
@@ -13,28 +13,27 @@ class Endscreen {
 
         let playAgain = false;
 
-        // Display message
+        // Mostrar mensaje
         let str = "Press space to play again, or press q to quit"; 
         do Output.moveCursor(10, 10);
         do Output.printString(str);
         do str.dispose();
         
-        // Wait until no key is pressed
+        // Esperar hasta que no haya teclas presionadas
         while (~(Keyboard.keyPressed() = 0)) {}
         
-        // Wait for space or q
+        // Esperar por espacio o q
         while (play) {
             let key = Keyboard.keyPressed();
 
-
-            // space, up arrow, down arrow → play again
+            // espacio, flecha arriba, flecha abajo → jugar de nuevo
             if ((key = 131) | (key = 133)) {
                 let playAgain = true;
                 do Sys.wait(10);
                 let play = false;
             }
 
-            // q or Q → quit
+            // q o Q → salir
             if ((key = 81) | (key = 113)) {
                 let playAgain = false;
                 do Sys.wait(10);
@@ -46,8 +45,8 @@ class Endscreen {
     }
     
     /**
-     * Win screen: called when all achievements are complete.
-     * Shows "YOU WIN" and a bouncing cube until user continues or quits.
+     * Pantalla de victoria: se llama cuando todos los logros están completos.
+     * Muestra "YOU WIN" y un cubo rebotando hasta que el usuario continúe o salga.
      */
     function void win() {
         var boolean stop;
@@ -56,9 +55,9 @@ class Endscreen {
         var String str;
 
         let stop = false;
-        let cube = Cube.new(7300); // start on ground
+        let cube = Cube.new(7300); // empezar en el suelo
 
-        // Clear area and show instructions
+        // Limpiar área y mostrar instrucciones
         let str = "You completed all achievements!";
         do Output.moveCursor(8, 10);
         do Output.printString(str);
@@ -69,18 +68,18 @@ class Endscreen {
         do Output.printString(str);
         do str.dispose();
         
-        // Main win loop
+        // Bucle principal de victoria
         while (~stop) {
 
-            // Animate cube
+            // Actualizar el cubo (física y dibujo)
             do cube.update();
 
-            // Draw YOU WIN graphic
+            // Dibujar texto "YOU WIN"
             do Graphics.writeYouWin(2826);
             
             let key = Keyboard.keyPressed();
 
-            // space, up, down, q, or Q stops the win screen
+            // espacio, arriba, abajo, q, o Q detiene la pantalla de victoria
             if ((key = 32) | (key = 131) | (key = 133) | (key = 81) | (key = 113)) {
                 let stop = true;
             }
@@ -88,14 +87,14 @@ class Endscreen {
             do Sys.wait(10);
         }
         
-        // If q was pressed → exit game entirely
+        // Si se presionó q → salir del juego completamente
         if ((key = 81) | (key = 113)) {
             do cube.dispose();
             do Sys.exit();
             return;
         }
         
-        // Otherwise return to gameplay loop
+        // De lo contrario, volver al bucle de juego
         do cube.dispose();
         do Achievements.clearLower();
         return;

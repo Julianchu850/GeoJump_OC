@@ -1,17 +1,17 @@
 class SpikeCluster {
-    // Tracks how far to the right the last spike cluster was placed (in word units)
+// Registra qué tan a la derecha se colocó el último grupo de pinchos (en unidades de palabra)
     static int rightmost;
-    static int minGap;  // ← AGREGAR: Contador para movimiento lento
-    field boolean hasCollided;  // ✅ Nuevo campo
+    static int minGap;  
+    field boolean hasCollided;  
 
 
-    // Basic geometry
+    
     field int height;          // in pixels
     field int width;           // in words (1 or 2)
     field int location;        // top-left screen word index for sprite (for Graphics)
     field int sprite;          // 1 = small spike, 2 = big spike
 
-    // Collision box (word-based x, pixel-based y)
+    // Caja de colisión (x basado en palabras, y basado en píxeles)
     field int tlx;             // top-left x (in words)
     field int tly;             // top-left y (in pixels)
     field int brx;             // bottom-right x (in words)
@@ -25,9 +25,9 @@ class SpikeCluster {
             let rightmost = 25;
         }
         if (~minGap) {
-            let minGap = 20;  // ✅ Mínimo 12 palabras entre spikes
+            let minGap = 20;  // Mínimo 20 palabras entre spikes
         }
-            let hasCollided = false;  // ✅ Inicializar
+            let hasCollided = false;  
 
         return this;
     }

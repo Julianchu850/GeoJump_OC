@@ -1,64 +1,64 @@
 /**
  * Graphics.jack
- * Geometry Dash Edition - Complete Sprite Library
- * 
- * This file contains all sprite drawing functions for the Geometry Dash game.
- * Each sprite is drawn using Memory.poke() to directly write to screen memory.
- * 
- * COORDINATE SYSTEM:
- * - Screen memory starts at address 16384
- * - Each word (16 bits) represents 16 pixels horizontally
- * - Screen is 512 pixels wide (32 words) × 256 pixels tall
- * - Each row is 32 words apart in memory (offset by +32)
- * 
- * SPRITE ORGANIZATION:
- * 1. Cube variants (player character) - 4 different designs
- * 2. Spike obstacles - 2 sizes
- * 3. Spaceship (flying obstacle)
- * 4. Ground line
- * 5. Utility functions (screen effects)
+ * Geometry Dash Edition - Biblioteca completa de sprites
+ +*
+ * Este archivo contiene todas las funciones para dibujar sprites del juego.
+ * Cada sprite se escribe directamente en la memoria de pantalla con Memory.poke().
+ *
+ * SISTEMA DE COORDENADAS:
+ * - La memoria de pantalla comienza en la dirección 16384
+ * - Cada palabra (16 bits) representa 16 píxeles horizontalmente
+ * - La pantalla es de 512 píxeles de ancho (32 palabras) × 256 píxeles de alto
+ * - Cada fila está separada por 32 palabras en memoria (desplazamiento +32)
+ *
+ * ORGANIZACIÓN DE SPRITES:
+ * 1. Variantes del cubo (personaje) - 4 diseños diferentes
+ * 2. Obstáculos (spikes) - 2 tamaños
+ * 3. Nave espacial (obstáculo volador)
+ * 4. Línea de suelo
+ * 5. Funciones utilitarias (efectos de pantalla)
  */
 
 class Graphics {
     
     //==========================================================================
-    // CUBE SPRITES - PLAYER CHARACTER
-    // The player can appear as different cube designs (selected randomly)
+    // SPRITES DEL CUBO - PERSONAJE
+    // El jugador puede aparecer con diferentes diseños de cubo (seleccionados aleatoriamente)
     //==========================================================================
     
     /**
-     * Cube Variant 1 - Inner Geometric Pattern
-     * Size: 16×16 pixels (1 word wide, 16 rows tall)
-     * Design: Hollow square with nested geometric shapes inside
+    * Variante del cubo 1 - Patrón geométrico interior
+    * Tamaño: 16×16 píxeles (1 palabra de ancho, 16 filas de alto)
+    * Diseño: Cuadrado hueco con formas geométricas anidadas en su interior
      */
     function void drawCube1(int location) {
         var int memAddress;
         let memAddress = 16384 + location;
         
-        do Memory.poke(memAddress + 0,   -1);      // Row 0:  ████████████████
-        do Memory.poke(memAddress + 32,  -32767);  // Row 1:  █______________█
-        do Memory.poke(memAddress + 64,  -31745);  // Row 2:  █__██████████__█
-        do Memory.poke(memAddress + 96,  -32257);  // Row 3:  █__█________█__█
-        do Memory.poke(memAddress + 128, -32017);  // Row 4:  █__█_█████__█__█
-        do Memory.poke(memAddress + 160, -32145);  // Row 5:  █__█_█___█__█__█
-        do Memory.poke(memAddress + 192, -32145);  // Row 6:  █__█_█___█__█__█
-        do Memory.poke(memAddress + 224, -32017);  // Row 7:  █__█_█████__█__█
-        do Memory.poke(memAddress + 256, -32257);  // Row 8:  █__█________█__█
-        do Memory.poke(memAddress + 288, -31745);  // Row 9:  █__██████████__█
-        do Memory.poke(memAddress + 320, -32767);  // Row 10: █______________█
-        do Memory.poke(memAddress + 352, -31745);  // Row 11: █__██████████__█
-        do Memory.poke(memAddress + 384, -32257);  // Row 12: █__█________█__█
-        do Memory.poke(memAddress + 416, -32289);  // Row 13: █___█████████__█
-        do Memory.poke(memAddress + 448, -32767);  // Row 14: █______________█
-        do Memory.poke(memAddress + 480, -1);      // Row 15: ████████████████
+        do Memory.poke(memAddress + 0,   -1);      // Fila 0:  ████████████████
+        do Memory.poke(memAddress + 32,  -32767);  // Fila 1:  █______________█
+        do Memory.poke(memAddress + 64,  -31745);  // Fila 2:  █__██████████__█
+        do Memory.poke(memAddress + 96,  -32257);  // Fila 3:  █__█________█__█
+        do Memory.poke(memAddress + 128, -32017);  // Fila 4:  █__█_█████__█__█
+        do Memory.poke(memAddress + 160, -32145);  // Fila 5:  █__█_█___█__█__█
+        do Memory.poke(memAddress + 192, -32145);  // Fila 6:  █__█_█___█__█__█
+        do Memory.poke(memAddress + 224, -32017);  // Fila 7:  █__█_█████__█__█
+        do Memory.poke(memAddress + 256, -32257);  // Fila 8:  █__█________█__█
+        do Memory.poke(memAddress + 288, -31745);  // Fila 9:  █__██████████__█
+        do Memory.poke(memAddress + 320, -32767);  // Fila 10: █______________█
+        do Memory.poke(memAddress + 352, -31745);  // Fila 11: █__██████████__█
+        do Memory.poke(memAddress + 384, -32257);  // Fila 12: █__█________█__█
+        do Memory.poke(memAddress + 416, -32289);  // Fila 13: █___█████████__█
+        do Memory.poke(memAddress + 448, -32767);  // Fila 14: █______________█
+        do Memory.poke(memAddress + 480, -1);      // Fila 15: ████████████████
         
         return;
     }
     
     /**
-     * Cube Variant 2 - Thick Border with Center Square
-     * Size: 16×16 pixels
-     * Design: Thick double-line border with centered inner square
+     * Variante del cubo 2 - Borde grueso con cuadrado central
+     * Tamaño: 16×16 píxeles
+     * Diseño: Doble borde grueso con un cuadrado centrado
      */
     function void drawCube2(int location) {
         var int memAddress;
@@ -85,9 +85,9 @@ class Graphics {
     }
     
     /**
-     * Cube Variant 3 - Nested Squares
-     * Size: 16×16 pixels
-     * Design: Multiple nested square borders creating depth effect
+     * Variante del cubo 3 - Cuadrados anidados
+     * Tamaño: 16×16 píxeles
+     * Diseño: Múltiples bordes cuadrados anidados que crean efecto de profundidad
      */
     function void drawCube3(int location) {
         var int memAddress;
@@ -114,9 +114,9 @@ class Graphics {
     }
     
     /**
-     * Cube Variant 4 - Checkerboard Pattern
-     * Size: 16×16 pixels
-     * Design: Double border with checkerboard-like inner pattern
+     * Variante del cubo 4 - Patrón tipo tablero
+     * Tamaño: 16×16 píxeles
+     * Diseño: Borde doble con patrón interior tipo tablero
      */
     function void drawCube4(int location) {
         var int memAddress;
@@ -143,8 +143,8 @@ class Graphics {
     }
     
     /**
-     * Erase Cube - Clears any cube sprite
-     * Writes zeros to all 16 rows of a 1-word wide sprite
+     * Borrar cubo - Limpia cualquier sprite de cubo
+     * Escribe ceros en las 16 filas de un sprite de 1 palabra de ancho
      */
     function void eraseCube(int location) {
         var int memAddress;
@@ -603,8 +603,8 @@ class Graphics {
     }
 
     /**
-     * ASCII version of Cube Variant 3 - Nested Squares
-     * Size: 10×10 characters (text-mode approximation)
+     * ASCII version of Cube Variant 3 
+     * Size: 10×10 
      */
     function void drawLargeAsciiCube3(int topRow, int leftCol) {
         var int i;
