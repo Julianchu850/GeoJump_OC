@@ -64,7 +64,7 @@ class GeometryGame {
         do Output.moveCursor(0, 12);
         do Output.printInt(highScore);
         
-        do Achievements.writeAchievementsLeft();
+        // do Achievements.writeAchievementsLeft();
         
         do Output.moveCursor(1, 0);
         do Output.printString("Score: ");

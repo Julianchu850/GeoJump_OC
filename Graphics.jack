@@ -468,4 +468,267 @@ class Graphics {
         
         return;
     }
+
+    /**
+     * Draw a large ASCII cube using text Output.
+     * Size: 10 rows × 10 columns (text characters)
+     * This is a convenience function for debugging or menus; it uses
+     * Output.moveCursor and Output.printString (text mode), not pixel memory.
+     * Usage: do Graphics.drawLargeAsciiCube(topRow, leftCol);
+     */
+    function void drawLargeAsciiCube1(int topRow, int leftCol) {
+        var int i;
+        var String line;
+
+        let i = 0;
+        while (i < 10) {
+            do Output.moveCursor(topRow + i, leftCol);
+            if (i = 0) {
+                let line = "##########";      // top border
+            }
+            else {
+                if (i = 1) {
+                    let line = "#........#";
+                }
+                else {
+                    if (i = 2) {
+                        let line = "#.#######.#";
+                    }
+                    else {
+                        if (i = 3) {
+                            let line = "#.#.....#.#";
+                        }
+                        else {
+                            if (i = 4) {
+                                let line = "#.#.###.#.#";
+                            }
+                            else {
+                                if (i = 5) {
+                                    let line = "#.#.#.#.#.#";
+                                }
+                                else {
+                                    if (i = 6) {
+                                        let line = "#.#.#.#.#.#";
+                                    }
+                                    else {
+                                        if (i = 7) {
+                                            let line = "#.#.###.#.#";
+                                        }
+                                        else {
+                                            if (i = 8) {
+                                                let line = "#.#######.#";
+                                            }
+                                            else {
+                                                let line = "##########";  // i = 9 bottom
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            do Output.printString(line);
+            do line.dispose();
+            let i = i + 1;
+        }
+
+        return;
+    }
+
+    /**
+     * ASCII version of Cube Variant 2 - Thick Border with Center Square
+     * Size: 10×10 characters (text-mode approximation)
+     */
+    function void drawLargeAsciiCube2(int topRow, int leftCol) {
+        var int i;
+        var String line;
+
+        let i = 0;
+        while (i < 10) {
+            do Output.moveCursor(topRow + i, leftCol);
+            if (i = 0) {
+                let line = "##########";
+            }
+            else {
+                if (i = 1) {
+                    let line = "##########";
+                }
+                else {
+                    if (i = 2) {
+                        let line = "##......##";
+                    }
+                    else {
+                        if (i = 3) {
+                            let line = "##.####.##";
+                        }
+                        else {
+                            if (i = 4) {
+                                let line = "##.#..#.##";
+                            }
+                            else {
+                                if (i = 5) {
+                                    let line = "##.#..#.##";
+                                }
+                                else {
+                                    if (i = 6) {
+                                        let line = "##.####.##";
+                                    }
+                                    else {
+                                        if (i = 7) {
+                                            let line = "##......##";
+                                        }
+                                        else {
+                                            if (i = 8) {
+                                                let line = "##########";
+                                            }
+                                            else {
+                                                let line = "##########"; // i = 9
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            do Output.printString(line);
+            do line.dispose();
+            let i = i + 1;
+        }
+
+        return;
+    }
+
+    /**
+     * ASCII version of Cube Variant 3 - Nested Squares
+     * Size: 10×10 characters (text-mode approximation)
+     */
+    function void drawLargeAsciiCube3(int topRow, int leftCol) {
+        var int i;
+        var String line;
+
+        let i = 0;
+        while (i < 10) {
+            do Output.moveCursor(topRow + i, leftCol);
+            if (i = 0) {
+                let line = "##########";
+            }
+            else {
+                if (i = 1) {
+                    let line = "#........#";
+                }
+                else {
+                    if (i = 2) {
+                        let line = "#.######.#";
+                    }
+                    else {
+                        if (i = 3) {
+                            let line = "#.#....#.#";
+                        }
+                        else {
+                            if (i = 4) {
+                                let line = "#.#.##.#.#";
+                            }
+                            else {
+                                if (i = 5) {
+                                    let line = "#.#.##.#.#";
+                                }
+                                else {
+                                    if (i = 6) {
+                                        let line = "#.#....#.#";
+                                    }
+                                    else {
+                                        if (i = 7) {
+                                            let line = "#.######.#";
+                                        }
+                                        else {
+                                            if (i = 8) {
+                                                let line = "#........#";
+                                            }
+                                            else {
+                                                let line = "##########"; // i = 9
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            do Output.printString(line);
+            do line.dispose();
+            let i = i + 1;
+        }
+
+        return;
+    }
+
+    /**
+     * ASCII version of Cube Variant 4 - Checkerboard Pattern
+     * Size: 10×10 characters (text-mode approximation)
+     */
+    function void drawLargeAsciiCube4(int topRow, int leftCol) {
+        var int i;
+        var String line;
+
+        let i = 0;
+        while (i < 10) {
+            do Output.moveCursor(topRow + i, leftCol);
+            if (i = 0) {
+                let line = "##########";
+            }
+            else {
+                if (i = 1) {
+                    let line = "##.#.#.#.#";
+                }
+                else {
+                    if (i = 2) {
+                        let line = "#.#.#.#.#.";
+                    }
+                    else {
+                        if (i = 3) {
+                            let line = "##.#.#.#.#";
+                        }
+                        else {
+                            if (i = 4) {
+                                let line = "#.#.#.#.#.";
+                            }
+                            else {
+                                if (i = 5) {
+                                    let line = "##.#.#.#.#";
+                                }
+                                else {
+                                    if (i = 6) {
+                                        let line = "#.#.#.#.#.";
+                                    }
+                                    else {
+                                        if (i = 7) {
+                                            let line = "##.#.#.#.#";
+                                        }
+                                        else {
+                                            if (i = 8) {
+                                                let line = "#.#.#.#.#.";
+                                            }
+                                            else {
+                                                let line = "##########"; // i = 9
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            do Output.printString(line);
+            do line.dispose();
+            let i = i + 1;
+        }
+
+        return;
+    }
 }

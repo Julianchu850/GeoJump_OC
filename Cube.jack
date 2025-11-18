@@ -49,6 +49,7 @@ class Cube {
      * pos: screen memory location (use 7300 for default ground position)
      */
     constructor Cube new(int pos) {
+        var String line;
         // initialize physics constants
         let gravityConst = 2;       // reduced from 3 for snappier feel
         let jumpVelocity = -24;     // reduced from -30 for more control
@@ -76,11 +77,11 @@ class Cube {
         let feetPos = true;
         let crouchState = 0;
         
-        // randomly select cube variant (1-4)
-        let cubeType = LCGRandom.randRange(1, 4);
-        
+        // establecer el cubo elegido por jugador
+        let cubeType = Startscreen.getCubeNum();
+    
         // draw initial cube
-        do drawCube();
+        do drawCube(cubeType);
         
         return this;
     }
@@ -94,16 +95,16 @@ class Cube {
     // -------- drawing methods --------
     
     /** draw cube based on selected variant */
-    method void drawCube() {
-        if (cubeType = 1) {
+    method void drawCube(int cubeNum) {
+        if (cubeNum = 1) { 
             do Graphics.drawCube1(location);
         }
         else {
-            if (cubeType = 2) {
+            if (cubeNum = 2) {
                 do Graphics.drawCube2(location);
             }
             else {
-                if (cubeType = 3) {
+                if (cubeNum = 3) { 
                     do Graphics.drawCube3(location);
                 }
                 else {
@@ -178,7 +179,7 @@ class Cube {
         // only redraw if position changed
         if (~(movementDelta = 0)) {
             do eraseCube(oldLocation);
-            do drawCube();
+            do drawCube(cubeType);
         }
         
         return -1;
