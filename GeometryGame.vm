@@ -162,16 +162,15 @@ function GeometryGame.setAchievementTimeout 0
 push argument 0
 pop pointer 0
 push argument 1
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE0
 push argument 1
 pop this 16
-goto IF_END0
-label IF_FALSE0
+goto $_IF_END0
+label $_IF_FALSE0
 push constant 150
 pop this 16
-label IF_END0
+label $_IF_END0
 push this 1
 push constant 4
 sub
@@ -192,9 +191,8 @@ push local 0
 push constant 131
 eq
 or
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE1
 push this 2
 call Cube.jump 1
 pop local 1
@@ -204,53 +202,54 @@ eq
 not
 push local 1
 and
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE2
 push constant 5
 call Achievements.complete 1
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+not
+if-goto $_IF_FALSE3
 push pointer 0
 push constant 0
 call GeometryGame.setAchievementTimeout 2
 pop temp 0
-label IF_FALSE2
-label IF_FALSE1
-goto IF_END0
-label IF_FALSE0
+goto $_IF_END3
+label $_IF_FALSE3
+label $_IF_END3
+goto $_IF_END2
+label $_IF_FALSE2
+label $_IF_END2
+goto $_IF_END1
+label $_IF_FALSE1
 push local 0
 push constant 133
 eq
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
+not
+if-goto $_IF_FALSE4
 push this 2
 call Cube.crouch 1
 pop temp 0
 push constant 7
 call Achievements.complete 1
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
+not
+if-goto $_IF_FALSE5
 push pointer 0
 push constant 0
 call GeometryGame.setAchievementTimeout 2
 pop temp 0
-label IF_FALSE4
-goto IF_END3
-label IF_FALSE3
+goto $_IF_END5
+label $_IF_FALSE5
+label $_IF_END5
+goto $_IF_END4
+label $_IF_FALSE4
 push local 0
 push constant 81
 eq
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
+not
+if-goto $_IF_FALSE6
 push constant 0
 return
-goto IF_END5
-label IF_FALSE5
+goto $_IF_END6
+label $_IF_FALSE6
 push local 0
 push constant 130
 eq
@@ -259,25 +258,25 @@ push constant 130
 eq
 not
 and
-if-goto IF_TRUE6
-goto IF_FALSE6
-label IF_TRUE6
+not
+if-goto $_IF_FALSE7
 push constant 1
 neg
 call Cube.updateJump 1
 pop temp 0
 push constant 1
 call Achievements.complete 1
-if-goto IF_TRUE7
-goto IF_FALSE7
-label IF_TRUE7
+not
+if-goto $_IF_FALSE8
 push pointer 0
 push constant 0
 call GeometryGame.setAchievementTimeout 2
 pop temp 0
-label IF_FALSE7
-goto IF_END6
-label IF_FALSE6
+goto $_IF_END8
+label $_IF_FALSE8
+label $_IF_END8
+goto $_IF_END7
+label $_IF_FALSE7
 push local 0
 push constant 132
 eq
@@ -286,24 +285,24 @@ push constant 132
 eq
 not
 and
-if-goto IF_TRUE8
-goto IF_FALSE8
-label IF_TRUE8
+not
+if-goto $_IF_FALSE9
 push constant 1
 call Cube.updateJump 1
 pop temp 0
 push constant 1
 call Achievements.complete 1
-if-goto IF_TRUE9
-goto IF_FALSE9
-label IF_TRUE9
+not
+if-goto $_IF_FALSE10
 push pointer 0
 push constant 0
 call GeometryGame.setAchievementTimeout 2
 pop temp 0
-label IF_FALSE9
-goto IF_END8
-label IF_FALSE8
+goto $_IF_END10
+label $_IF_FALSE10
+label $_IF_END10
+goto $_IF_END9
+label $_IF_FALSE9
 push local 0
 push constant 47
 gt
@@ -311,9 +310,8 @@ push local 0
 push constant 58
 lt
 and
-if-goto IF_TRUE10
-goto IF_FALSE10
-label IF_TRUE10
+not
+if-goto $_IF_FALSE11
 push this 1
 push local 0
 push constant 48
@@ -323,30 +321,34 @@ pop this 0
 push this 0
 push constant 1
 lt
-if-goto IF_TRUE11
-goto IF_FALSE11
-label IF_TRUE11
+not
+if-goto $_IF_FALSE12
 push this 1
 push constant 4
 sub
 pop this 0
-label IF_FALSE11
+goto $_IF_END12
+label $_IF_FALSE12
+label $_IF_END12
 push constant 6
 call Achievements.complete 1
-if-goto IF_TRUE12
-goto IF_FALSE12
-label IF_TRUE12
+not
+if-goto $_IF_FALSE13
 push pointer 0
 push constant 250
 call GeometryGame.setAchievementTimeout 2
 pop temp 0
-label IF_FALSE12
-label IF_FALSE10
-label IF_END8
-label IF_END6
-label IF_END5
-label IF_END3
-label IF_END0
+goto $_IF_END13
+label $_IF_FALSE13
+label $_IF_END13
+goto $_IF_END11
+label $_IF_FALSE11
+label $_IF_END11
+label $_IF_END9
+label $_IF_END7
+label $_IF_END6
+label $_IF_END4
+label $_IF_END1
 push local 0
 pop this 20
 push constant 0
@@ -355,34 +357,35 @@ return
 function GeometryGame.run 1
 push argument 0
 pop pointer 0
-label WHILE_EXP0
+label $_WHILE_EXP14
 push this 15
 not
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END14
 push pointer 0
 call GeometryGame.checkInput 1
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE15
 push this 2
 call Cube.update 1
 push constant 0
 eq
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE16
 push constant 0
 call Achievements.complete 1
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+not
+if-goto $_IF_FALSE17
 push pointer 0
 push constant 0
 call GeometryGame.setAchievementTimeout 2
 pop temp 0
-label IF_FALSE2
-label IF_FALSE1
+goto $_IF_END17
+label $_IF_FALSE17
+label $_IF_END17
+goto $_IF_END16
+label $_IF_FALSE16
+label $_IF_END16
 push this 7
 call Spaceship.update 1
 pop temp 0
@@ -442,19 +445,19 @@ pop local 0
 push local 0
 push constant 0
 lt
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
+not
+if-goto $_IF_FALSE18
 push constant 8
 call Achievements.complete 1
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
+not
+if-goto $_IF_FALSE19
 push pointer 0
 push constant 0
 call GeometryGame.setAchievementTimeout 2
 pop temp 0
-label IF_FALSE4
+goto $_IF_END19
+label $_IF_FALSE19
+label $_IF_END19
 push this 2
 push constant 20
 neg
@@ -466,58 +469,62 @@ push this 4
 push this 5
 push this 6
 call Spaceship.collision 5
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
+not
+if-goto $_IF_FALSE20
 push this 7
 push constant 0
 not
 call Spaceship.reset 2
 pop temp 0
-label IF_FALSE5
+goto $_IF_END20
+label $_IF_FALSE20
+label $_IF_END20
 push this 8
 push this 3
 push this 4
 push this 5
 push this 6
 call Spaceship.collision 5
-if-goto IF_TRUE6
-goto IF_FALSE6
-label IF_TRUE6
+not
+if-goto $_IF_FALSE21
 push this 8
 push constant 0
 not
 call Spaceship.reset 2
 pop temp 0
-label IF_FALSE6
+goto $_IF_END21
+label $_IF_FALSE21
+label $_IF_END21
 push this 9
 push this 3
 push this 4
 push this 5
 push this 6
 call Spaceship.collision 5
-if-goto IF_TRUE7
-goto IF_FALSE7
-label IF_TRUE7
+not
+if-goto $_IF_FALSE22
 push this 9
 push constant 0
 not
 call Spaceship.reset 2
 pop temp 0
-label IF_FALSE7
-goto IF_END3
-label IF_FALSE3
+goto $_IF_END22
+label $_IF_FALSE22
+label $_IF_END22
+goto $_IF_END18
+label $_IF_FALSE18
 push local 0
 push constant 0
 gt
-if-goto IF_TRUE8
-goto IF_FALSE8
-label IF_TRUE8
+not
+if-goto $_IF_FALSE23
 push constant 0
 not
 pop this 15
-label IF_FALSE8
-label IF_END3
+goto $_IF_END23
+label $_IF_FALSE23
+label $_IF_END23
+label $_IF_END18
 push this 10
 push this 3
 push this 4
@@ -552,39 +559,38 @@ push this 5
 push this 6
 call SpikeCluster.collision 5
 or
-if-goto IF_TRUE9
-goto IF_FALSE9
-label IF_TRUE9
+not
+if-goto $_IF_FALSE24
 push constant 2
 call Achievements.complete 1
-if-goto IF_TRUE10
-goto IF_FALSE10
-label IF_TRUE10
+not
+if-goto $_IF_FALSE25
 push pointer 0
 push constant 150
 call GeometryGame.setAchievementTimeout 2
 pop temp 0
-goto IF_END10
-label IF_FALSE10
+goto $_IF_END25
+label $_IF_FALSE25
 push constant 0
 not
 pop this 15
-label IF_END10
-label IF_FALSE9
+label $_IF_END25
+goto $_IF_END24
+label $_IF_FALSE24
+label $_IF_END24
 push this 0
 call Sys.wait 1
 pop temp 0
-goto IF_END0
-label IF_FALSE0
+goto $_IF_END15
+label $_IF_FALSE15
 push constant 0
 return
-label IF_END0
+label $_IF_END15
 push this 17
 push constant 3
 eq
-if-goto IF_TRUE11
-goto IF_FALSE11
-label IF_TRUE11
+not
+if-goto $_IF_FALSE26
 push constant 0
 pop this 17
 push this 18
@@ -613,9 +619,8 @@ push this 18
 push constant 1000
 eq
 or
-if-goto IF_TRUE12
-goto IF_FALSE12
-label IF_TRUE12
+not
+if-goto $_IF_FALSE27
 push this 1
 push constant 1
 sub
@@ -627,9 +632,8 @@ pop this 0
 push this 18
 push constant 1000
 eq
-if-goto IF_TRUE13
-goto IF_FALSE13
-label IF_TRUE13
+not
+if-goto $_IF_FALSE28
 push constant 4
 call Achievements.complete 1
 pop temp 0
@@ -637,49 +641,56 @@ push pointer 0
 push constant 0
 call GeometryGame.setAchievementTimeout 2
 pop temp 0
-label IF_FALSE13
-label IF_FALSE12
+goto $_IF_END28
+label $_IF_FALSE28
+label $_IF_END28
+goto $_IF_END27
+label $_IF_FALSE27
+label $_IF_END27
 push this 18
 push constant 1499
 gt
-if-goto IF_TRUE14
-goto IF_FALSE14
-label IF_TRUE14
+not
+if-goto $_IF_FALSE29
 push constant 1
 neg
 call Achievements.complete 1
 pop temp 0
-label IF_FALSE14
-goto IF_END11
-label IF_FALSE11
+goto $_IF_END29
+label $_IF_FALSE29
+label $_IF_END29
+goto $_IF_END26
+label $_IF_FALSE26
 push this 17
 push constant 1
 add
 pop this 17
-label IF_END11
+label $_IF_END26
 push this 16
 push constant 0
 eq
-if-goto IF_TRUE15
-goto IF_FALSE15
-label IF_TRUE15
+not
+if-goto $_IF_FALSE30
 call Achievements.clearMessage 0
 pop temp 0
-label IF_FALSE15
+goto $_IF_END30
+label $_IF_FALSE30
+label $_IF_END30
 push this 16
 push constant 1
 sub
 pop this 16
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP14
+label $_WHILE_END14
 push this 18
 push this 19
 gt
-if-goto IF_TRUE16
-goto IF_FALSE16
-label IF_TRUE16
+not
+if-goto $_IF_FALSE31
 push this 18
 return
-label IF_FALSE16
+goto $_IF_END31
+label $_IF_FALSE31
+label $_IF_END31
 push this 19
 return

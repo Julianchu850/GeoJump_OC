@@ -13,8 +13,8 @@ push constant 0
 pop static 4
 push constant 0
 pop static 5
-push constant 0
 push static 3
+push constant 0
 add
 push constant 30
 call String.new 1
@@ -82,8 +82,8 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push constant 1
 push static 3
+push constant 1
 add
 push constant 36
 call String.new 1
@@ -163,8 +163,8 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push constant 2
 push static 3
+push constant 2
 add
 push constant 34
 call String.new 1
@@ -240,8 +240,8 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push constant 3
 push static 3
+push constant 3
 add
 push constant 36
 call String.new 1
@@ -321,8 +321,8 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push constant 4
 push static 3
+push constant 4
 add
 push constant 29
 call String.new 1
@@ -388,8 +388,8 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push constant 5
 push static 3
+push constant 5
 add
 push constant 29
 call String.new 1
@@ -455,8 +455,8 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push constant 6
 push static 3
+push constant 6
 add
 push constant 22
 call String.new 1
@@ -508,8 +508,8 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push constant 7
 push static 3
+push constant 7
 add
 push constant 24
 call String.new 1
@@ -565,8 +565,8 @@ pop temp 0
 pop pointer 1
 push temp 0
 pop that 0
-push constant 8
 push static 3
+push constant 8
 add
 push constant 28
 call String.new 1
@@ -710,9 +710,8 @@ and
 push static 5
 not
 and
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE0
 push constant 1000
 call Sys.wait 1
 pop temp 0
@@ -723,54 +722,55 @@ pop temp 0
 push constant 0
 not
 pop static 5
-label IF_FALSE0
+goto $_IF_END0
+label $_IF_FALSE0
+label $_IF_END0
 push argument 0
 push constant 0
 lt
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE1
 push constant 0
 return
-label IF_FALSE1
+goto $_IF_END1
+label $_IF_FALSE1
+label $_IF_END1
 push argument 0
 push static 0
 lt
-not
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+if-goto $_IF_FALSE2
 push constant 2
 call Sys.error 1
 pop temp 0
-label IF_FALSE2
-push argument 0
+goto $_IF_END2
+label $_IF_FALSE2
+label $_IF_END2
 push static 2
+push argument 0
 add
 pop pointer 1
 push that 0
-if-goto IF_TRUE3
-goto IF_FALSE3
-label IF_TRUE3
+not
+if-goto $_IF_FALSE3
 push constant 0
 return
-label IF_FALSE3
+goto $_IF_END3
+label $_IF_FALSE3
+label $_IF_END3
 push argument 0
 push constant 3
 eq
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
+not
+if-goto $_IF_FALSE4
 call Achievements.displaySecrets 0
 pop temp 0
-goto IF_END4
-label IF_FALSE4
+goto $_IF_END4
+label $_IF_FALSE4
 push argument 0
 push constant 5
 eq
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
+not
+if-goto $_IF_FALSE5
 push static 4
 push constant 1
 add
@@ -778,17 +778,18 @@ pop static 4
 push static 4
 push constant 50
 eq
-not
-if-goto IF_TRUE6
-goto IF_FALSE6
-label IF_TRUE6
+if-goto $_IF_FALSE6
 push constant 0
 return
-label IF_FALSE6
-label IF_FALSE5
-label IF_END4
-push argument 0
+goto $_IF_END6
+label $_IF_FALSE6
+label $_IF_END6
+goto $_IF_END5
+label $_IF_FALSE5
+label $_IF_END5
+label $_IF_END4
 push static 2
+push argument 0
 add
 push constant 0
 not
@@ -813,8 +814,8 @@ push constant 4
 push constant 20
 call Output.moveCursor 2
 pop temp 0
-push argument 0
 push static 3
+push argument 0
 add
 pop pointer 1
 push that 0
@@ -826,12 +827,12 @@ return
 function Achievements.clearMessage 1
 push constant 17792
 pop local 0
-label WHILE_EXP0
+label $_WHILE_EXP7
 push local 0
 push constant 18144
 lt
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END7
 push local 0
 push constant 0
 call Memory.poke 2
@@ -840,19 +841,19 @@ push local 0
 push constant 1
 add
 pop local 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP7
+label $_WHILE_END7
 push constant 0
 return
 function Achievements.clearLower 1
 push constant 17792
 pop local 0
-label WHILE_EXP0
+label $_WHILE_EXP8
 push local 0
 push constant 24577
 lt
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END8
 push local 0
 push constant 0
 call Memory.poke 2
@@ -861,8 +862,8 @@ push local 0
 push constant 1
 add
 pop local 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP8
+label $_WHILE_END8
 push constant 0
 return
 function Achievements.displaySecrets 2
@@ -897,43 +898,44 @@ call String.appendChar 2
 pop local 1
 push constant 0
 pop local 0
-label WHILE_EXP0
+label $_WHILE_EXP9
 push local 0
 push static 0
 lt
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END9
 push constant 6
 push local 0
 add
 push constant 10
 call Output.moveCursor 2
 pop temp 0
-push local 0
 push static 3
+push local 0
 add
 pop pointer 1
 push that 0
 call Output.printString 1
 pop temp 0
-push local 0
 push static 2
+push local 0
 add
 pop pointer 1
 push that 0
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE10
 push local 1
 call Output.printString 1
 pop temp 0
-label IF_FALSE0
+goto $_IF_END10
+label $_IF_FALSE10
+label $_IF_END10
 push local 0
 push constant 1
 add
 pop local 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP9
+label $_WHILE_END9
 push local 1
 call String.dispose 1
 pop temp 0
@@ -1022,23 +1024,23 @@ pop temp 0
 push local 1
 call String.dispose 1
 pop temp 0
-label WHILE_EXP1
+label $_WHILE_EXP11
 call Keyboard.keyPressed 0
 push constant 0
 eq
 not
 not
-if-goto WHILE_END1
-goto WHILE_EXP1
-label WHILE_END1
-label WHILE_EXP2
+if-goto $_WHILE_END11
+goto $_WHILE_EXP11
+label $_WHILE_END11
+label $_WHILE_EXP12
 call Keyboard.keyPressed 0
 push constant 0
 eq
 not
-if-goto WHILE_END2
-goto WHILE_EXP2
-label WHILE_END2
+if-goto $_WHILE_END12
+goto $_WHILE_EXP12
+label $_WHILE_END12
 call Achievements.clearLower 0
 pop temp 0
 push constant 0

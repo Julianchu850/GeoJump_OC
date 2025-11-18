@@ -1,8 +1,8 @@
 class SpikeCluster {
     // Tracks how far to the right the last spike cluster was placed (in word units)
     static int rightmost;
-    static int minGap;  // ← AGREGAR: Contador para movimiento lento
-    field boolean hasCollided;  // ✅ Nuevo campo
+    static int minGap;  // AGREGAR: Contador para movimiento lento
+    field boolean hasCollided;  // Nuevo campo
 
 
     // Basic geometry
@@ -25,9 +25,9 @@ class SpikeCluster {
             let rightmost = 25;
         }
         if (~minGap) {
-            let minGap = 20;  // ✅ Mínimo 12 palabras entre spikes
+            let minGap = 20;  // Minimo 12 palabras entre spikes
         }
-            let hasCollided = false;  // ✅ Inicializar
+            let hasCollided = false;  // Inicializar
 
         return this;
     }
@@ -110,7 +110,7 @@ method void update() {
         let bry = 244;
         let brx = tlx + width;
         let location = (7808 - (height * 32)) + tlx;
-        let hasCollided = false;  // ✅ Reset cuando reaparece
+        let hasCollided = false;  // Reset cuando reaparece
 
         return;
     }

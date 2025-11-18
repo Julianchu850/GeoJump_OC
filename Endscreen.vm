@@ -107,19 +107,19 @@ pop temp 0
 push local 2
 call String.dispose 1
 pop temp 0
-label WHILE_EXP0
+label $_WHILE_EXP0
 call Keyboard.keyPressed 0
 push constant 0
 eq
 not
 not
-if-goto WHILE_END0
-goto WHILE_EXP0
-label WHILE_END0
-label WHILE_EXP1
+if-goto $_WHILE_END0
+goto $_WHILE_EXP0
+label $_WHILE_END0
+label $_WHILE_EXP1
 push local 3
 not
-if-goto WHILE_END1
+if-goto $_WHILE_END1
 call Keyboard.keyPressed 0
 pop local 1
 push local 1
@@ -129,9 +129,8 @@ push local 1
 push constant 133
 eq
 or
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE2
 push constant 0
 not
 pop local 0
@@ -140,7 +139,9 @@ call Sys.wait 1
 pop temp 0
 push constant 0
 pop local 3
-label IF_FALSE0
+goto $_IF_END2
+label $_IF_FALSE2
+label $_IF_END2
 push local 1
 push constant 81
 eq
@@ -148,9 +149,8 @@ push local 1
 push constant 113
 eq
 or
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE3
 push constant 0
 pop local 0
 push constant 10
@@ -158,9 +158,11 @@ call Sys.wait 1
 pop temp 0
 push constant 0
 pop local 3
-label IF_FALSE1
-goto WHILE_EXP1
-label WHILE_END1
+goto $_IF_END3
+label $_IF_FALSE3
+label $_IF_END3
+goto $_WHILE_EXP1
+label $_WHILE_END1
 push local 0
 return
 function Endscreen.win 4
@@ -329,11 +331,11 @@ pop temp 0
 push local 3
 call String.dispose 1
 pop temp 0
-label WHILE_EXP0
+label $_WHILE_EXP4
 push local 0
 not
 not
-if-goto WHILE_END0
+if-goto $_WHILE_END4
 push local 2
 call Cube.update 1
 pop temp 0
@@ -361,18 +363,19 @@ push local 1
 push constant 113
 eq
 or
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
+not
+if-goto $_IF_FALSE5
 push constant 0
 not
 pop local 0
-label IF_FALSE0
+goto $_IF_END5
+label $_IF_FALSE5
+label $_IF_END5
 push constant 10
 call Sys.wait 1
 pop temp 0
-goto WHILE_EXP0
-label WHILE_END0
+goto $_WHILE_EXP4
+label $_WHILE_END4
 push local 1
 push constant 81
 eq
@@ -380,9 +383,8 @@ push local 1
 push constant 113
 eq
 or
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
+not
+if-goto $_IF_FALSE6
 push local 2
 call Cube.dispose 1
 pop temp 0
@@ -390,7 +392,9 @@ call Sys.exit 0
 pop temp 0
 push constant 0
 return
-label IF_FALSE1
+goto $_IF_END6
+label $_IF_FALSE6
+label $_IF_END6
 push local 2
 call Cube.dispose 1
 pop temp 0

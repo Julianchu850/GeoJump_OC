@@ -76,34 +76,51 @@ class Spaceship {
 
     /** reset */
     method void reset(boolean borrar) {
-        var int heightType;
+        var int r; // Variable para el número aleatorio
         var int spriteHeight;
 
+        // Si la nave ya tiene posición, la borramos antes de moverla
         if (location) {
             if (borrar) {
-            do Graphics.eraseSpaceship(location);
+                do Graphics.eraseSpaceship(location);
             }
         }
 
-        let heightType = LCGRandom.randRange(0, 9);
-        if (heightType < 7) {
-            let tly = 210;
+        // --- NUEVA LÓGICA 50/50 ---
+        // Lanzamos una moneda: 0 o 1
+        let r = LCGRandom.randRange(0, 1);
+
+        if (r = 1) {
+            // 50% de probabilidad: TECHO
+            let tly = 35; 
         }
         else {
-            if (heightType = 9) {
-                let tly = 235;
+            // 50% de probabilidad: SUELO
+            // Dentro del suelo, variamos un poco la altura para que no sea monótono
+            let r = LCGRandom.randRange(0, 2);
+            if (r = 0) { 
+                let tly = 210; 
             }
             else {
-                let tly = 215;
+                if (r = 1) { 
+                    let tly = 215; 
+                }
+                else { 
+                    let tly = 235; // Muy bajo
+                }
             }
         }
+        // --------------------------
 
         let spriteHeight = 13;
-
+        
+        // Calculamos la posición X para que no se solapen
         let tlx = rightmost + LCGRandom.randRange(20, 200) + minGap;
         if (tlx > rightmost) {
             let rightmost = tlx;
         }
+        
+        // Definimos la caja de colisión y ubicación en memoria
         let brx = tlx + 1;
         let bry = tly + spriteHeight;
         let location = (tly * 32) + tlx;
