@@ -1,0 +1,44 @@
+function Main.main 2
+call Startscreen.go 0
+call Math.abs 1
+call LCGRandom.setSeed 1
+pop temp 0
+call Achievements.init 0
+pop temp 0
+push local 0
+call GeometryGame.new 1
+pop local 1
+push local 1
+call GeometryGame.run 1
+pop local 0
+label $_WHILE_EXP0
+push local 0
+push constant 0
+eq
+not
+not
+if-goto $_WHILE_END0
+call Endscreen.crash 0
+not
+if-goto $_IF_FALSE1
+push local 1
+call GeometryGame.dispose 1
+pop temp 0
+push local 0
+call GeometryGame.new 1
+pop local 1
+push local 1
+call GeometryGame.run 1
+pop local 0
+goto $_IF_END1
+label $_IF_FALSE1
+push constant 0
+pop local 0
+label $_IF_END1
+goto $_WHILE_EXP0
+label $_WHILE_END0
+push local 1
+call GeometryGame.dispose 1
+pop temp 0
+push constant 0
+return

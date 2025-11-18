@@ -1,0 +1,422 @@
+function Cloud.new 0
+push constant 6
+call Memory.alloc 1
+pop pointer 0
+push pointer 0
+push argument 0
+call Cloud.reset 2
+pop temp 0
+push constant 27
+pop static 0
+push pointer 0
+return
+function Cloud.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Cloud.decrement_rightmost 0
+push static 0
+push constant 1
+sub
+pop static 0
+push static 0
+push constant 28
+lt
+not
+if-goto $_IF_FALSE0
+push constant 28
+pop static 0
+goto $_IF_END0
+label $_IF_FALSE0
+label $_IF_END0
+push constant 0
+return
+function Cloud.update 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 27
+gt
+not
+if-goto $_IF_FALSE1
+push this 1
+push constant 1
+sub
+pop this 1
+push this 2
+push constant 1
+sub
+pop this 2
+push constant 0
+return
+goto $_IF_END1
+label $_IF_FALSE1
+label $_IF_END1
+push this 5
+push constant 3
+eq
+not
+if-goto $_IF_FALSE2
+push this 4
+push constant 0
+eq
+not
+if-goto $_IF_FALSE3
+push this 1
+call Graphics.drawCloudPos8 1
+pop temp 0
+push this 1
+push constant 1
+sub
+pop this 1
+push this 2
+push constant 1
+sub
+pop this 2
+goto $_IF_END3
+label $_IF_FALSE3
+push this 4
+push constant 1
+eq
+not
+if-goto $_IF_FALSE4
+push this 1
+call Graphics.drawCloudPos1 1
+pop temp 0
+goto $_IF_END4
+label $_IF_FALSE4
+push this 4
+push constant 2
+eq
+not
+if-goto $_IF_FALSE5
+push this 1
+call Graphics.drawCloudPos2 1
+pop temp 0
+goto $_IF_END5
+label $_IF_FALSE5
+push this 4
+push constant 3
+eq
+not
+if-goto $_IF_FALSE6
+push this 1
+call Graphics.drawCloudPos3 1
+pop temp 0
+goto $_IF_END6
+label $_IF_FALSE6
+push this 4
+push constant 4
+eq
+not
+if-goto $_IF_FALSE7
+push this 1
+call Graphics.drawCloudPos4 1
+pop temp 0
+goto $_IF_END7
+label $_IF_FALSE7
+push this 4
+push constant 5
+eq
+not
+if-goto $_IF_FALSE8
+push this 1
+call Graphics.drawCloudPos5 1
+pop temp 0
+goto $_IF_END8
+label $_IF_FALSE8
+push this 4
+push constant 6
+eq
+not
+if-goto $_IF_FALSE9
+push this 1
+call Graphics.drawCloudPos6 1
+pop temp 0
+goto $_IF_END9
+label $_IF_FALSE9
+push this 4
+push constant 7
+eq
+not
+if-goto $_IF_FALSE10
+push this 1
+call Graphics.drawCloudPos7 1
+pop temp 0
+push constant 1
+neg
+pop this 4
+goto $_IF_END10
+label $_IF_FALSE10
+push this 4
+push constant 101
+eq
+not
+if-goto $_IF_FALSE11
+push this 3
+call Graphics.drawCloudEnd1 1
+pop temp 0
+goto $_IF_END11
+label $_IF_FALSE11
+push this 4
+push constant 102
+eq
+not
+if-goto $_IF_FALSE12
+push this 3
+call Graphics.drawCloudEnd2 1
+pop temp 0
+goto $_IF_END12
+label $_IF_FALSE12
+push this 4
+push constant 103
+eq
+not
+if-goto $_IF_FALSE13
+push this 3
+call Graphics.drawCloudEnd3 1
+pop temp 0
+goto $_IF_END13
+label $_IF_FALSE13
+push this 4
+push constant 103
+eq
+not
+if-goto $_IF_FALSE14
+push this 3
+call Graphics.drawCloudEnd4 1
+pop temp 0
+goto $_IF_END14
+label $_IF_FALSE14
+push this 4
+push constant 105
+eq
+not
+if-goto $_IF_FALSE15
+push this 3
+call Graphics.drawCloudEnd5 1
+pop temp 0
+goto $_IF_END15
+label $_IF_FALSE15
+push this 4
+push constant 106
+eq
+not
+if-goto $_IF_FALSE16
+push this 3
+call Graphics.drawCloudEnd6 1
+pop temp 0
+goto $_IF_END16
+label $_IF_FALSE16
+push this 4
+push constant 107
+eq
+not
+if-goto $_IF_FALSE17
+push this 3
+call Graphics.drawCloudEnd7 1
+pop temp 0
+goto $_IF_END17
+label $_IF_FALSE17
+push this 4
+push constant 108
+eq
+not
+if-goto $_IF_FALSE18
+push this 3
+call Graphics.drawCloudEnd8 1
+pop temp 0
+goto $_IF_END18
+label $_IF_FALSE18
+push this 4
+push constant 109
+eq
+not
+if-goto $_IF_FALSE19
+push this 3
+call Graphics.drawCloudEnd9 1
+pop temp 0
+goto $_IF_END19
+label $_IF_FALSE19
+push this 4
+push constant 110
+eq
+not
+if-goto $_IF_FALSE20
+push this 3
+call Graphics.drawCloudEnd10 1
+pop temp 0
+goto $_IF_END20
+label $_IF_FALSE20
+push this 4
+push constant 111
+eq
+not
+if-goto $_IF_FALSE21
+push this 3
+call Graphics.drawCloudEnd11 1
+pop temp 0
+goto $_IF_END21
+label $_IF_FALSE21
+push this 4
+push constant 112
+eq
+not
+if-goto $_IF_FALSE22
+push this 3
+call Graphics.drawCloudEnd12 1
+pop temp 0
+goto $_IF_END22
+label $_IF_FALSE22
+push this 4
+push constant 113
+eq
+not
+if-goto $_IF_FALSE23
+push this 3
+call Graphics.drawCloudEnd13 1
+pop temp 0
+goto $_IF_END23
+label $_IF_FALSE23
+push this 4
+push constant 114
+eq
+not
+if-goto $_IF_FALSE24
+push this 3
+call Graphics.drawCloudEnd14 1
+pop temp 0
+goto $_IF_END24
+label $_IF_FALSE24
+push this 4
+push constant 115
+eq
+not
+if-goto $_IF_FALSE25
+push this 3
+call Graphics.drawCloudEnd15 1
+pop temp 0
+goto $_IF_END25
+label $_IF_FALSE25
+push this 4
+push constant 116
+eq
+not
+if-goto $_IF_FALSE26
+push this 3
+call Graphics.drawCloudEnd16 1
+pop temp 0
+goto $_IF_END26
+label $_IF_FALSE26
+push this 4
+push constant 117
+eq
+not
+if-goto $_IF_FALSE27
+push this 3
+call Graphics.drawCloudEnd17 1
+pop temp 0
+push pointer 0
+push constant 0
+call Cloud.reset 2
+pop temp 0
+goto $_IF_END27
+label $_IF_FALSE27
+label $_IF_END27
+label $_IF_END26
+label $_IF_END25
+label $_IF_END24
+label $_IF_END23
+label $_IF_END22
+label $_IF_END21
+label $_IF_END20
+label $_IF_END19
+label $_IF_END18
+label $_IF_END17
+label $_IF_END16
+label $_IF_END15
+label $_IF_END14
+label $_IF_END13
+label $_IF_END12
+label $_IF_END11
+label $_IF_END10
+label $_IF_END9
+label $_IF_END8
+label $_IF_END7
+label $_IF_END6
+label $_IF_END5
+label $_IF_END4
+label $_IF_END3
+push this 1
+push this 3
+eq
+not
+if-goto $_IF_FALSE28
+push constant 100
+pop this 4
+push constant 0
+pop this 1
+goto $_IF_END28
+label $_IF_FALSE28
+label $_IF_END28
+push this 4
+push constant 1
+add
+pop this 4
+push constant 1
+neg
+pop this 5
+goto $_IF_END2
+label $_IF_FALSE2
+label $_IF_END2
+push this 5
+push constant 1
+add
+pop this 5
+push constant 0
+return
+function Cloud.reset 0
+push argument 0
+pop pointer 0
+push constant 100
+push constant 160
+call LCGRandom.randRange 2
+pop this 0
+push this 0
+push constant 32
+call Math.multiply 2
+pop this 3
+push argument 1
+push constant 0
+eq
+not
+if-goto $_IF_FALSE29
+push static 0
+push constant 100
+push constant 350
+call LCGRandom.randRange 2
+add
+pop this 2
+goto $_IF_END29
+label $_IF_FALSE29
+push argument 1
+pop this 2
+push constant 150
+pop this 0
+label $_IF_END29
+push this 2
+pop static 0
+push this 3
+push this 2
+add
+pop this 1
+push constant 0
+pop this 4
+push constant 0
+pop this 5
+push constant 0
+return
